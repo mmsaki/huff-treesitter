@@ -1,0 +1,252 @@
+================
+Complete Huff Program
+================
+
+#include "huffmate/utils/Errors.huff"
+
+// Define custom errors
+#define error PanicError(uint256)
+#define error Error(string)
+
+// Define events  
+#define event Transfer(address from, address to, uint256 amount)
+
+// Define interface
+#define function transfer(address to, uint256 amount) nonpayable returns (bool)
+
+// Define constants
+#define constant OWNER = FREE_STORAGE_POINTER()
+#define constant MAX_SUPPLY = 0x21e19e0c9bab2400000
+
+// Define table
+#define table CODE_TABLE {
+    0x604260005260206000F3
+}
+
+// Test with decorators
+#[calldata("0x01"), value(0x01)]
+#define test SIMPLE_TEST() = {
+    0x01 0x01 eq ASSERT()
+}
+
+// Main macro
+#define macro MAIN() = takes (0) returns (0) {
+    // Get function selector
+    0x00 calldataload 0xE0 shr
+    
+    // Match transfer function
+    __FUNC_SIG(transfer) eq transfer jumpi
+    
+    // Default revert
+    __ERROR(Error) 0x00 mstore
+    0x20 0x00 revert
+    
+    transfer:
+        // Call transfer logic
+        TRANSFER()
+}
+
+#define macro TRANSFER() = takes (0) returns (0) {
+    // Implementation here
+    [OWNER] sload
+    caller eq
+    success jumpi
+    
+    __ERROR(PanicError) 0x00 mstore
+    0x04 mstore
+    0x24 0x00 revert
+    
+    success:
+        0x01 0x00 mstore
+        0x20 0x00 return
+}
+
+---
+
+(source_file
+  (control
+    (control_include))
+  (comment
+    (comment_line))
+  (error
+    (error_definition
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter_with_modifier
+          (interface_primitives)))))
+  (error
+    (error_definition
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter_with_modifier
+          (interface_primitives)))))
+  (comment
+    (comment_line))
+  (interface
+    (interface_event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter_with_modifier
+          (interface_primitives)
+          name: (identifier))
+        (parameter_with_modifier
+          (interface_primitives)
+          name: (identifier))
+        (parameter_with_modifier
+          (interface_primitives)
+          name: (identifier)))))
+  (comment
+    (comment_line))
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter_with_modifier
+          (interface_primitives)
+          name: (identifier))
+        (parameter_with_modifier
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
+        (parameter_with_modifier
+          (interface_primitives)))))
+  (comment
+    (comment_line))
+  (constant
+    (constant_definition
+      name: (identifier)
+      value: (macro_call
+        name: (identifier))))
+  (constant
+    (constant_definition
+      name: (identifier)
+      value: (number
+        (number_hex))))
+  (comment
+    (comment_line))
+  (declaration
+    (declaration_table
+      name: (identifier)
+      body: (macro_body
+        (number
+          (number_hex)))))
+  (comment
+    (comment_line))
+  (decorator
+    (decorator_item
+      name: (identifier)
+      args: (string_literal))
+    (decorator_item
+      name: (identifier)
+      args: (number
+        (number_hex))))
+  (declaration
+    (declaration_test
+      name: (identifier)
+      body: (macro_body
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier)))))
+  (comment
+    (comment_line))
+  (declaration
+    (declaration_macro
+      name: (identifier)
+      takes_count: (number_decimal)
+      returns_count: (number_decimal)
+      (macro_body
+        (comment
+          (comment_line))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (comment
+          (comment_line))
+        (builtin_function
+          args: (identifier))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (comment
+          (comment_line))
+        (builtin_function
+          args: (identifier))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (jump_label
+          name: (identifier))
+        (comment
+          (comment_line))
+        (macro_call
+          name: (identifier)))))
+  (declaration
+    (declaration_macro
+      name: (identifier)
+      takes_count: (number_decimal)
+      returns_count: (number_decimal)
+      (macro_body
+        (comment
+          (comment_line))
+        (constant
+          (constant_reference))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (macro_call
+          name: (identifier))
+        (builtin_function
+          args: (identifier))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (jump_label
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))))))

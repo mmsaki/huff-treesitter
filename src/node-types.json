@@ -1101,123 +1101,6 @@
     }
   },
   {
-    "type": "natspec_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "natspec_tags",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "natspec_line",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "natspec_tags",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "natspec_tag_param",
-    "named": true,
-    "fields": {
-      "keyword": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "@param",
-            "named": false
-          }
-        ]
-      },
-      "param_name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "natspec_tag_return",
-    "named": true,
-    "fields": {
-      "keyword": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "@return",
-            "named": false
-          }
-        ]
-      },
-      "param_name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "natspec_tags",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "natspec_tag_author",
-          "named": true
-        },
-        {
-          "type": "natspec_tag_dev",
-          "named": true
-        },
-        {
-          "type": "natspec_tag_notice",
-          "named": true
-        },
-        {
-          "type": "natspec_tag_param",
-          "named": true
-        },
-        {
-          "type": "natspec_tag_return",
-          "named": true
-        },
-        {
-          "type": "natspec_tag_title",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "number",
     "named": true,
     "fields": {},
@@ -2042,27 +1925,11 @@
     "named": false
   },
   {
-    "type": "/**",
-    "named": false
-  },
-  {
-    "type": "///",
-    "named": false
-  },
-  {
     "type": ":",
     "named": false
   },
   {
     "type": "=",
-    "named": false
-  },
-  {
-    "type": "@param",
-    "named": false
-  },
-  {
-    "type": "@return",
     "named": false
   },
   {
@@ -2442,19 +2309,11 @@
     "named": false
   },
   {
-    "type": "natspec_tag_author",
+    "type": "natspec_block",
     "named": true
   },
   {
-    "type": "natspec_tag_dev",
-    "named": true
-  },
-  {
-    "type": "natspec_tag_notice",
-    "named": true
-  },
-  {
-    "type": "natspec_tag_title",
+    "type": "natspec_line",
     "named": true
   },
   {

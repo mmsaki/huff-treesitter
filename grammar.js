@@ -33,15 +33,18 @@ module.exports = grammar({
       $.natspec_line,
       $.natspec_block,
     ),
-    natspec_line: $ => seq(
+    natspec_line: $ => token(seq(
       "///",
-      repeat(choice($.natspec_tags)),
-    ),
-    natspec_block: $ => seq(
+      /.*/
+    )),
+    natspec_block: $ => token(seq(
       "/**",
-      repeat($.natspec_tags),
-      "*/",
-    ),
+      repeat(choice(
+        /[^*]+/,
+        /\*[^/]/
+      )),
+      "*/"
+    )),
     natspec_tags: $ => choice(
       $.natspec_tag_title,
       $.natspec_tag_author,
@@ -57,10 +60,12 @@ module.exports = grammar({
     natspec_tag_param: $ => prec.right(seq(
       field("keyword", "@param"),
       optional(field("param_name", $.identifier)),
+      optional(field("description", /[^\n\r*]*/)),
     )),
     natspec_tag_return: $ => prec.right(seq(
       field("keyword", "@return"),
       optional(field("param_name", $.identifier)),
+      optional(field("description", /[^\n\r*]*/)),
     )),
     identifier: $ => /[A-Za-z_]\w*/,
     comment_line: $ => token(seq("//", /.*/)),

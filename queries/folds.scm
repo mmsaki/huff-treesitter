@@ -1,12 +1,3 @@
-;; ==========================
-;; Huff Tree-sitter Folds
-;; ==========================
-
-;; --------------------------
-;; Block structures that should be foldable
-;; --------------------------
-
-;; Macro bodies
 (macro_body
   "{" @fold.start
   "}" @fold.end) @fold

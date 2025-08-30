@@ -67,7 +67,7 @@
   name: (identifier) @jumpdest_declaration)
 
 ;; Parameter name definitions
-(parameter_with_modifier
+(parameter
   name: (identifier) @local.definition.parameter)
 
 ;; --------------------------
@@ -121,7 +121,7 @@
 ;; --------------------------
 
 ;; EVM opcodes are built-in and always available
-(opcodes) @local.definition.builtin
+(opcode) @local.definition.builtin
 
 ;; Built-in functions are global
 [

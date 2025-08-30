@@ -50,7 +50,7 @@
 
 ;; Align opcodes within macro bodies  
 (macro_body
-  (opcodes) @indent.branch)
+  (opcode) @indent.branch)
 
 ;; Align numbers within macro bodies
 (macro_body
@@ -72,7 +72,7 @@
 (comment) @indent.auto
 
 ;; Handle parameter continuation lines
-(parameter_with_modifier) @indent.branch
+(parameter) @indent.branch
 
 ;; Handle decorator argument continuation  
 (decorator_item) @indent.branch

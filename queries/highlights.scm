@@ -78,11 +78,7 @@
 ;; --------------------------
 ;; Opcodes
 ;; --------------------------
-(opcodes_io) @function.builtin
-
-(opcodes_calculation) @operator
-(opcodes_stop) @constant.builtin
-(opcodes_stack) @variable.builtin
+(opcode) @function.builtin
 
 (template_parameter_call) @type.parameter
 

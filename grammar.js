@@ -21,8 +21,8 @@ module.exports = grammar({
       $.error,
       $.control,
       $.jumpdest,
+      $.opcode,
       $.macro_call,
-      $.opcodes,
       $.constant,
       $.jumpdest_label,
       $.macro_body,
@@ -172,7 +172,8 @@ module.exports = grammar({
       field("keyword", "#define function"),
       field("name", $.identifier),
       field("parameters", $.parameter_list),
-      optional(choice("view", "pure", "nonpayable", "payable")),
+      optional(field("visibility", choice("external", "internal", "public", "private"))),
+      optional(field("mutability", choice("view", "pure", "nonpayable", "payable"))),
       optional(seq(
         "returns",
         field("returns", $.parameter_list)
@@ -180,19 +181,14 @@ module.exports = grammar({
     )),
     parameter_list: $ => seq(
       "(",
-      optional(sep1($.parameter_with_modifier, ",")),
+      optional(sep1($.parameter, ",")),
       ")"
     ),
-    parameter_with_modifier: $ => choice(
-      seq(
-        $.interface_primitives,
-        field("modifier", alias("indexed", $.modifier_indexed)),
-        optional(field("name", $.identifier))
-      ),
-      seq(
-        $.interface_primitives,
-        optional(field("name", $.identifier))
-      )
+    parameter: $ => seq(
+      $.interface_primitives,
+      optional(field("location", choice("memory", "storage", "calldata"))),
+      optional(field("modifier", alias("indexed", $.modifier_indexed))),
+      optional(field("name", $.identifier))
     ),
     modifier_indexed: $ => "indexed",
     interface_event: $ => seq(
@@ -200,7 +196,27 @@ module.exports = grammar({
       field("name", $.identifier),
       field("parameters", $.parameter_list)
     ),
-    interface_primitives: $ => field("type", token(/(address|string\d*|bytes\d*|int\d*|uint\d*|bool|hash\d*)/)),
+    interface_primitives: $ => field("type", choice(
+      // Array types (must come first to avoid conflict)
+      token(seq(
+        choice(
+          "string", "bytes", "bool", "address",
+          /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+          /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+          /bytes(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32)/
+        ),
+        "[",
+        optional(/\d+/),
+        "]"
+      )),
+      // Primitive types
+      token(choice(
+        "string", "bytes", "bool", "address",
+        /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+        /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+        /bytes(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32)/
+      ))
+    )),
     interface_extensions: $ => field("modifier", token(/(nonpayable|view)/)),
     predeclaration_template: $ => seq(
       field("keyword", "template"),
@@ -208,18 +224,30 @@ module.exports = grammar({
       field("parameters", sep1($.identifier, ",")),
       ">"
     ),
-    opcodes: $ => choice(
-      $.opcodes_stop,
-      $.opcodes_calculation,
-      $.opcodes_stack,
-      $.opcodes_io,
+    opcode: $ => choice(
+      field("opcode", choice(
+        // Individual opcode keywords
+        "lt", "gt", "slt", "sgt", "eq", "iszero", "and", "origin", "or", "xor", "not", "sha3",
+        "address", "balance", "caller", "callvalue", "calldataload", "calldatasize", "calldatacopy",
+        "codesize", "codecopy", "basefee", "blobhash", "blobbasefee", "blockhash", "coinbase",
+        "timestamp", "number", "difficulty", "prevrandao", "gaslimit", "chainid", "selfbalance",
+        "pop", "mload", "mstore8", "mstore", "sload", "sstore", "jumpdest", "jumpi", "jump", "pc",
+        "msize", "stop", "addmod", "add", "mulmod", "mul", "sub", "div", "sdiv", "mod", "smod",
+        "exp", "signextend", "byte", "shl", "shr", "sar", "gasprice", "extcodesize", "extcodecopy",
+        "returndatasize", "returndatacopy", "extcodehash", "gas", "log0", "log1", "log2", "log3",
+        "log4", "tload", "tstore", "mcopy", "create2", "create", "callcode", "call", "return",
+        "delegatecall", "staticcall", "revert", "invalid", "selfdestruct",
+        "push32", "push31", "push30", "push29", "push28", "push27", "push26", "push25", "push24",
+        "push23", "push22", "push21", "push20", "push19", "push18", "push17", "push16", "push15",
+        "push14", "push13", "push12", "push11", "push10", "push9", "push8", "push7", "push6",
+        "push5", "push4", "push3", "push2", "push1", "push0",
+        "swap16", "swap15", "swap14", "swap13", "swap12", "swap11", "swap10", "swap9", "swap8",
+        "swap7", "swap6", "swap5", "swap4", "swap3", "swap2", "swap1",
+        "dup16", "dup15", "dup14", "dup13", "dup12", "dup11", "dup10", "dup9", "dup8", "dup7",
+        "dup6", "dup5", "dup4", "dup3", "dup2", "dup1"
+      )),
       $.template_parameter_call
     ),
-    opcodes_io: $ => field("opcode", token(/(sstore|sload|mstore8|mstore|mload|pop|msize|balance|address|returndatacopy|returndatasize|extcodecopy|extcodesize|gasprice|caller|origin|gaslimit|difficulty|number|timestamp|coinbase|blockhash|codecopy|codesize|calldatacopy|calldatasize|calldataload|callvalue|gas)/)),
-    opcodes_side_effects: $ => field("opcode", token(/(log4|log3|log2|log1|log0|jumpdest|getpc|jumpi|jump|create2|staticcall|delegatecall|callcode|call|create)/)),
-    opcodes_calculation: $ => field("opcode", token(/(not|xor|or|and|ror|rol|sar|shr|shl|keccak|sha3|byte|iszero|eq|sgt|slt|gt|lt|signextend|exp|mulmod|addmod|smod|mod|sdiv|div|sub|mul|add)/)),
-    opcodes_stop: $ => field("opcode", token(/(selfdestruct|invalid|revert|return|stop)/)),
-    opcodes_stack: $ => field("opcode", token(/((swap1|dup1)[0-6]|(swap|dup)[1-9]|push3[0-2]|push[1-2][0-9]|push[0-9])/)),
     template_parameter_call: $ => field("parameter", token(/<\s*[A-Za-z0-9_]+\s*>/)),
     macro_call: $ => seq(
       field("name", $.identifier),

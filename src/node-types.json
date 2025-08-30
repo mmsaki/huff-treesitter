@@ -108,12 +108,12 @@
     "type": "constant_definition",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define constant",
+            "type": "#define",
             "named": false
           }
         ]
@@ -125,6 +125,16 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "constant",
+            "named": false
           }
         ]
       },
@@ -228,12 +238,12 @@
     "type": "declaration_fn",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define fn",
+            "type": "#define",
             "named": false
           }
         ]
@@ -297,6 +307,16 @@
             "named": false
           }
         ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "fn",
+            "named": false
+          }
+        ]
       }
     },
     "children": {
@@ -324,12 +344,12 @@
           }
         ]
       },
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define jumptable",
+            "type": "#define",
             "named": false
           }
         ]
@@ -341,6 +361,16 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "jumptable",
+            "named": false
           }
         ]
       }
@@ -350,12 +380,12 @@
     "type": "declaration_jumptable_packed",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define jumptable__packed",
+            "type": "#define",
             "named": false
           }
         ]
@@ -369,6 +399,16 @@
             "named": true
           }
         ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "jumptable__packed",
+            "named": false
+          }
+        ]
       }
     }
   },
@@ -376,12 +416,12 @@
     "type": "declaration_macro",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define macro",
+            "type": "#define",
             "named": false
           }
         ]
@@ -449,6 +489,16 @@
             "named": true
           }
         ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macro",
+            "named": false
+          }
+        ]
       }
     },
     "children": {
@@ -476,12 +526,12 @@
           }
         ]
       },
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define table",
+            "type": "#define",
             "named": false
           }
         ]
@@ -493,6 +543,16 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "table",
+            "named": false
           }
         ]
       }
@@ -512,12 +572,12 @@
           }
         ]
       },
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define test",
+            "type": "#define",
             "named": false
           }
         ]
@@ -543,6 +603,16 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "test",
+            "named": false
           }
         ]
       }
@@ -620,12 +690,12 @@
     "type": "error_definition",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define error",
+            "type": "#define",
             "named": false
           }
         ]
@@ -647,6 +717,16 @@
           {
             "type": "parameter_list",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "error",
+            "named": false
           }
         ]
       }
@@ -683,12 +763,12 @@
     "type": "interface_event",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define event",
+            "type": "#define",
             "named": false
           }
         ]
@@ -712,6 +792,16 @@
             "named": true
           }
         ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "event",
+            "named": false
+          }
+        ]
       }
     }
   },
@@ -724,12 +814,12 @@
     "type": "interface_function",
     "named": true,
     "fields": {
-      "keyword": {
+      "define_keyword": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "#define function",
+            "type": "#define",
             "named": false
           }
         ]
@@ -783,6 +873,16 @@
           {
             "type": "parameter_list",
             "named": true
+          }
+        ]
+      },
+      "type_keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function",
+            "named": false
           }
         ]
       },
@@ -1914,43 +2014,7 @@
     "named": false
   },
   {
-    "type": "#define constant",
-    "named": false
-  },
-  {
-    "type": "#define error",
-    "named": false
-  },
-  {
-    "type": "#define event",
-    "named": false
-  },
-  {
-    "type": "#define fn",
-    "named": false
-  },
-  {
-    "type": "#define function",
-    "named": false
-  },
-  {
-    "type": "#define jumptable",
-    "named": false
-  },
-  {
-    "type": "#define jumptable__packed",
-    "named": false
-  },
-  {
-    "type": "#define macro",
-    "named": false
-  },
-  {
-    "type": "#define table",
-    "named": false
-  },
-  {
-    "type": "#define test",
+    "type": "#define",
     "named": false
   },
   {
@@ -2130,6 +2194,10 @@
     "named": true
   },
   {
+    "type": "constant",
+    "named": false
+  },
+  {
     "type": "create",
     "named": false
   },
@@ -2218,6 +2286,14 @@
     "named": false
   },
   {
+    "type": "error",
+    "named": false
+  },
+  {
+    "type": "event",
+    "named": false
+  },
+  {
     "type": "exp",
     "named": false
   },
@@ -2235,6 +2311,14 @@
   },
   {
     "type": "external",
+    "named": false
+  },
+  {
+    "type": "fn",
+    "named": false
+  },
+  {
+    "type": "function",
     "named": false
   },
   {
@@ -2282,6 +2366,14 @@
     "named": false
   },
   {
+    "type": "jumptable",
+    "named": false
+  },
+  {
+    "type": "jumptable__packed",
+    "named": false
+  },
+  {
     "type": "log0",
     "named": false
   },
@@ -2303,6 +2395,10 @@
   },
   {
     "type": "lt",
+    "named": false
+  },
+  {
+    "type": "macro",
     "named": false
   },
   {
@@ -2702,7 +2798,15 @@
     "named": false
   },
   {
+    "type": "table",
+    "named": false
+  },
+  {
     "type": "takes",
+    "named": false
+  },
+  {
+    "type": "test",
     "named": false
   },
   {

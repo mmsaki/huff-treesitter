@@ -405,10 +405,18 @@
         "members": [
           {
             "type": "FIELD",
-            "name": "keyword",
+            "name": "define_keyword",
             "content": {
               "type": "STRING",
-              "value": "#define macro"
+              "value": "#define"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "type_keyword",
+            "content": {
+              "type": "STRING",
+              "value": "macro"
             }
           },
           {
@@ -578,10 +586,18 @@
         "members": [
           {
             "type": "FIELD",
-            "name": "keyword",
+            "name": "define_keyword",
             "content": {
               "type": "STRING",
-              "value": "#define fn"
+              "value": "#define"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "type_keyword",
+            "content": {
+              "type": "STRING",
+              "value": "fn"
             }
           },
           {
@@ -727,10 +743,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define jumptable"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "jumptable"
           }
         },
         {
@@ -776,10 +800,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define jumptable__packed"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "jumptable__packed"
           }
         },
         {
@@ -801,10 +833,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define error"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "error"
           }
         },
         {
@@ -862,10 +902,18 @@
         "members": [
           {
             "type": "FIELD",
-            "name": "keyword",
+            "name": "define_keyword",
             "content": {
               "type": "STRING",
-              "value": "#define function"
+              "value": "#define"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "type_keyword",
+            "content": {
+              "type": "STRING",
+              "value": "function"
             }
           },
           {
@@ -1108,10 +1156,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define event"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "event"
           }
         },
         {
@@ -2035,10 +2091,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define constant"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "constant"
           }
         },
         {
@@ -2183,10 +2247,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define table"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "table"
           }
         },
         {
@@ -2212,10 +2284,18 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "keyword",
+          "name": "define_keyword",
           "content": {
             "type": "STRING",
-            "value": "#define test"
+            "value": "#define"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_keyword",
+          "content": {
+            "type": "STRING",
+            "value": "test"
           }
         },
         {

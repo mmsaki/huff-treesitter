@@ -97,7 +97,8 @@ module.exports = grammar({
       $.declaration_test
     ),
     declaration_macro: $ => prec.right(seq(
-      field("keyword", "#define macro"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "macro"),
       field("name", $.identifier),
       optional(seq(
         "(",
@@ -120,7 +121,8 @@ module.exports = grammar({
       optional($.macro_body)
     )),
     declaration_fn: $ => prec.right(seq(
-      field("keyword", "#define fn"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "fn"),
       field("name", $.identifier),
       optional(seq(
         "(",
@@ -143,7 +145,8 @@ module.exports = grammar({
       optional($.macro_body)
     )),
     declaration_jumptable: $ => seq(
-      field("keyword", "#define jumptable"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "jumptable"),
       field("name", $.identifier),
       field("body", $.jumptable_body)
     ),
@@ -153,12 +156,14 @@ module.exports = grammar({
       "}"
     ),
     declaration_jumptable_packed: $ => seq(
-      field("keyword", "#define jumptable__packed"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "jumptable__packed"),
       field("name", $.identifier)
     ),
     error: $ => $.error_definition,
     error_definition: $ => seq(
-      field("keyword", "#define error"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "error"),
       field("name", $.identifier),
       optional(field("parameters", $.parameter_list))
     ),
@@ -169,7 +174,8 @@ module.exports = grammar({
       $.interface_extensions
     ),
     interface_function: $ => prec.right(seq(
-      field("keyword", "#define function"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "function"),
       field("name", $.identifier),
       field("parameters", $.parameter_list),
       optional(field("visibility", choice("external", "internal", "public", "private"))),
@@ -192,7 +198,8 @@ module.exports = grammar({
     ),
     modifier_indexed: $ => "indexed",
     interface_event: $ => seq(
-      field("keyword", "#define event"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "event"),
       field("name", $.identifier),
       field("parameters", $.parameter_list)
     ),
@@ -262,7 +269,8 @@ module.exports = grammar({
       $.constant_reference
     ),
     constant_definition: $ => seq(
-      field("keyword", "#define constant"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "constant"),
       field("name", $.identifier),
       "=",
       field("value", choice($.number, $.macro_call))
@@ -289,12 +297,14 @@ module.exports = grammar({
       "}"
     ),
     declaration_table: $ => seq(
-      field("keyword", "#define table"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "table"),
       field("name", $.identifier),
       field("body", $.macro_body)
     ),
     declaration_test: $ => seq(
-      field("keyword", "#define test"),
+      field("define_keyword", "#define"),
+      field("type_keyword", "test"),
       field("name", $.identifier),
       optional(seq(
         "(",

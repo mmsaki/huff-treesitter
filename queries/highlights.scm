@@ -22,16 +22,17 @@
 ;; --------------------------
 ;; Declarations - Keywords
 ;; --------------------------
-"#define macro" @keyword
-"#define fn" @keyword
-"#define jumptable" @keyword
-"#define jumptable__packed" @keyword
-"#define function" @keyword
-"#define event" @keyword
-"#define error" @keyword
-"#define constant" @keyword
-"#define table" @keyword
-"#define test" @keyword
+"#define" @keyword.directive.define
+"macro" @keyword
+"fn" @keyword
+"jumptable" @keyword
+"jumptable__packed" @keyword
+"function" @keyword
+"event" @keyword
+"error" @keyword
+"constant" @keyword
+"table" @keyword
+"test" @keyword
 
 "takes" @keyword
 "returns" @keyword

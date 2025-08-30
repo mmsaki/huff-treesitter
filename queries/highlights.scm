@@ -91,6 +91,10 @@
 ;; --------------------------
 (macro_call name: (identifier) @function.call)
 
+;; Jump opcodes (when parsed as macro calls)
+((macro_call name: (identifier) @keyword.control)
+  (#match? @keyword.control "^(jump|jumpi|jumpdest)$"))
+
 
 ;; --------------------------
 ;; Constants
@@ -99,26 +103,28 @@
 (constant_reference) @constant
 
 ;; --------------------------
-;; Jump Labels
+;; Jump Targets (Labels & Jumptable Entries) - Blue Highlighting
 ;; --------------------------
-(jump_label name: (identifier) @label)
+;; Jump label definitions (success:, error:, etc.)
+(jumpdest_label name: (identifier) @jumpdest_declaration)
 
-;; --------------------------
-;; Identifiers
-;; --------------------------
-(identifier) @variable
+;; Jumptable entries (jump_one, jump_two, etc.)
+(jumptable_body (identifier) @function)
+
+;; Simple approach: Let jump opcodes be highlighted as control keywords
+;; Jump targets (labels and jumptable entries) are consistently highlighted as @label above
 
 ;; --------------------------
 ;; New Declarations
 ;; --------------------------
 (declaration_table name: (identifier) @constant)
 (declaration_test name: (identifier) @function.test)
+(declaration_jumptable name: (identifier) @constant)
 
 ;; --------------------------
-;; Jumptables
+;; Identifiers
 ;; --------------------------
-(declaration_jumptable name: (identifier) @constant)
-(jumptable_body (identifier) @label)
+(identifier) @variable
 
 ;; --------------------------
 ;; Builtin Functions
@@ -136,12 +142,15 @@
 ;; Control/Include
 ;; --------------------------
 (control_include) @keyword.import
+(control_include path: (string_literal) @string.special)
 
 ;; --------------------------
 ;; Decorators
 ;; --------------------------
 (decorator) @attribute
 (decorator_item name: (identifier) @attribute)
+(decorator_item args: (string_literal) @string)
+(decorator_item args: (number) @number)
 
 ;; --------------------------
 ;; String Literals

@@ -1756,7 +1756,7 @@
     "named": true,
     "fields": {
       "location": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1774,7 +1774,7 @@
         ]
       },
       "modifier": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1784,7 +1784,7 @@
         ]
       },
       "name": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {

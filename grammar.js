@@ -23,6 +23,10 @@ module.exports = grammar({
       $.macro_call,
       $.opcodes,
       $.constant,
+      $.jump_label,
+      $.macro_body,
+      $.decorator,
+      $.builtin_function,
     ),
     natspec: $ => choice(
       $.natspec_line,
@@ -68,8 +72,18 @@ module.exports = grammar({
       $.comment_line,
       $.comment_block,
     ),
-    control: $ => $.control_import,
+    control: $ => choice(
+      $.control_import,
+      $.control_include
+    ),
     control_import: $ => token("#include"),
+    control_include: $ => seq(
+      "#include",
+      field("path", choice(
+        /\"[^\"]*\"/,
+        /'[^']*'/
+      ))
+    ),
     number: $ => choice(
       $.number_decimal,
       $.number_hex
@@ -80,28 +94,18 @@ module.exports = grammar({
       $.declaration_macro,
       $.declaration_fn,
       $.declaration_jumptable,
-      $.declaration_jumptable_packed
+      $.declaration_jumptable_packed,
+      $.declaration_table,
+      $.declaration_test
     ),
-    declaration_macro: $ => seq(
+    declaration_macro: $ => prec.right(seq(
       field("keyword", "#define macro"),
       field("name", $.identifier),
       optional(seq(
-        "=",
-        field("takes_keyword", "takes"),
         "(",
-        field("takes_count", $.number_decimal),
-        ")",
-        optional(seq(
-          field("returns_keyword", "returns"),
-          "(",
-          field("returns_count", $.number_decimal),
-          ")"
-        ))
-      ))
-    ),
-    declaration_fn: $ => seq(
-      field("keyword", "#define fn"),
-      field("name", $.identifier),
+        optional(field("template_parameters", sep1($.identifier, ","))),
+        ")"
+      )),
       optional(seq(
         "=",
         field("takes_keyword", "takes"),
@@ -114,11 +118,41 @@ module.exports = grammar({
           field("returns_count", $.number_decimal),
           ")"
         ))
-      ))
-    ),
+      )),
+      optional($.macro_body)
+    )),
+    declaration_fn: $ => prec.right(seq(
+      field("keyword", "#define fn"),
+      field("name", $.identifier),
+      optional(seq(
+        "(",
+        optional(field("param_name", $.identifier)),
+        ")"
+      )),
+      optional(seq(
+        "=",
+        field("takes_keyword", "takes"),
+        "(",
+        field("takes_count", $.number_decimal),
+        ")",
+        optional(seq(
+          field("returns_keyword", "returns"),
+          "(",
+          field("returns_count", $.number_decimal),
+          ")"
+        ))
+      )),
+      optional($.macro_body)
+    )),
     declaration_jumptable: $ => seq(
       field("keyword", "#define jumptable"),
-      field("name", $.identifier)
+      field("name", $.identifier),
+      field("body", $.jumptable_body)
+    ),
+    jumptable_body: $ => seq(
+      "{",
+      repeat($.identifier),
+      "}"
     ),
     declaration_jumptable_packed: $ => seq(
       field("keyword", "#define jumptable__packed"),
@@ -127,7 +161,8 @@ module.exports = grammar({
     error: $ => $.error_definition,
     error_definition: $ => seq(
       field("keyword", "#define error"),
-      field("name", $.identifier)
+      field("name", $.identifier),
+      optional(field("parameters", $.parameter_list))
     ),
     interface: $ => choice(
       $.interface_function,
@@ -135,25 +170,40 @@ module.exports = grammar({
       $.interface_primitives,
       $.interface_extensions
     ),
-    interface_function: $ => seq(
+    interface_function: $ => prec.right(seq(
       field("keyword", "#define function"),
       field("name", $.identifier),
       field("parameters", $.parameter_list),
-      optional($.interface_extensions),
-      "returns",
-      field("returns", $.parameter_list)
-    ),
+      optional(choice("view", "pure", "nonpayable", "payable")),
+      optional(seq(
+        "returns",
+        field("returns", $.parameter_list)
+      ))
+    )),
     parameter_list: $ => seq(
       "(",
-      sep1($.interface_primitives, ","),
+      optional(sep1($.parameter_with_modifier, ",")),
       ")"
     ),
+    parameter_with_modifier: $ => choice(
+      seq(
+        $.interface_primitives,
+        field("modifier", alias("indexed", $.modifier_indexed)),
+        optional(field("name", $.identifier))
+      ),
+      seq(
+        $.interface_primitives,
+        optional(field("name", $.identifier))
+      )
+    ),
+    modifier_indexed: $ => "indexed",
     interface_event: $ => seq(
       field("keyword", "#define event"),
-      field("name", $.identifier)
+      field("name", $.identifier),
+      field("parameters", $.parameter_list)
     ),
     interface_primitives: $ => field("type", token(/(address|string\d*|bytes\d*|int\d*|uint\d*|bool|hash\d*)/)),
-    interface_extensions: $ => field("modifier", token(/(nonpayable|view|returns)/)),
+    interface_extensions: $ => field("modifier", token(/(nonpayable|view)/)),
     predeclaration_template: $ => seq(
       field("keyword", "template"),
       "<",
@@ -175,8 +225,11 @@ module.exports = grammar({
     template_parameter_call: $ => field("parameter", token(/<\s*[A-Za-z0-9_]+\s*>/)),
     macro_call: $ => seq(
       field("name", $.identifier),
-      optional(field("template_parameters", sep1($.identifier, ","))),
-      "("
+      optional(seq(
+        "(",
+        optional(field("args", sep1(choice($.number, $.identifier), ","))),
+        ")"
+      ))
     ),
     constant: $ => choice(
       $.constant_definition,
@@ -184,12 +237,70 @@ module.exports = grammar({
     ),
     constant_definition: $ => seq(
       field("keyword", "#define constant"),
-      field("name", $.identifier)
+      field("name", $.identifier),
+      "=",
+      field("value", choice($.number, $.macro_call))
     ),
     constant_reference: $ => seq(
       "[",
       field("name", /[A-Z_]+/),
       "]"
+    ),
+    jump_label: $ => seq(
+      field("name", $.identifier),
+      ":"
+    ),
+    macro_body: $ => seq(
+      "{",
+      repeat($._patterns),
+      "}"
+    ),
+    declaration_table: $ => seq(
+      field("keyword", "#define table"),
+      field("name", $.identifier),
+      field("body", $.macro_body)
+    ),
+    declaration_test: $ => seq(
+      field("keyword", "#define test"),
+      field("name", $.identifier),
+      optional(seq(
+        "(",
+        optional(field("parameters", sep1($.identifier, ","))),
+        ")"
+      )),
+      "=",
+      field("body", $.macro_body)
+    ),
+    decorator: $ => seq(
+      "#[",
+      sep1($.decorator_item, ","),
+      "]"
+    ),
+    decorator_item: $ => seq(
+      field("name", $.identifier),
+      optional(seq(
+        "(",
+        field("args", sep1(choice($.string_literal, $.number, $.identifier), ",")),
+        ")"
+      ))
+    ),
+    string_literal: $ => choice(
+      /\"([^\"\\\\]|\\\\.)*\"/,
+      /'([^'\\\\]|\\\\.)*'/
+    ),
+    builtin_function: $ => seq(
+      field("name", choice(
+        "__ERROR",
+        "__EVENT_HASH",
+        "__FUNC_SIG",
+        "__RIGHTPAD",
+        "__codesize",
+        "__tablesize",
+        "__tablestart"
+      )),
+      "(",
+      field("args", sep1(choice($.identifier, $.number, $.string_literal), ",")),
+      ")"
     ),
   }
 });

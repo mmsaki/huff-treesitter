@@ -85,7 +85,7 @@
 ;; --------------------------
 ;; Macro Calls
 ;; --------------------------
-(macro_call name: (identifier) @function.call)
+(macro_call name: (identifier) @function)
 
 ;; Jump opcodes (when parsed as macro calls)
 ((macro_call name: (identifier) @keyword.control)
@@ -114,7 +114,7 @@
 ;; New Declarations
 ;; --------------------------
 (declaration_table name: (identifier) @constant)
-(declaration_test name: (identifier) @function.test)
+(declaration_test name: (identifier) @function)
 (declaration_jumptable name: (identifier) @constant)
 
 ;; --------------------------

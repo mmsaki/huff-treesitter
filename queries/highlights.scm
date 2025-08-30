@@ -1,74 +1,82 @@
 ;; ==========================
 ;; Huff Tree-sitter Highlights
-;; Matches naming scheme from source.huff
+;; Standard Neovim highlight groups
 ;; ==========================
 
 ;; --------------------------
 ;; Natspec / Documentation
 ;; --------------------------
-(natspec_line) @comment.block.documentation.huff
-(natspec_block) @comment.block.documentation.huff
+(natspec_line) @comment
+(natspec_block) @comment
 
-(natspec_tag_title) @storage.type.title.natspec
-(natspec_tag_author) @storage.type.author.natspec
-(natspec_tag_notice) @storage.type.notice.natspec
-(natspec_tag_dev) @storage.type.dev.natspec
-(natspec_tag_param) @storage.type.param.natspec
-(natspec_tag_return) @storage.type.return.natspec
+(natspec_tag_title) @attribute
+(natspec_tag_author) @attribute
+(natspec_tag_notice) @attribute
+(natspec_tag_dev) @attribute
+(natspec_tag_param) @attribute
+(natspec_tag_return) @attribute
 
-(comment_line) @comment.line.huff
-(comment_block) @comment.block.huff
+(comment_line) @comment
+(comment_block) @comment
 
 ;; --------------------------
-;; Declarations - Storage Keywords
+;; Declarations - Keywords
 ;; --------------------------
-"#define macro" @storage.macro.huff
-"#define fn" @storage.macro.huff
-"#define jumptable" @storage.macro.huff
-"#define jumptable__packed" @storage.macro.huff
-"#define function" @storage.function.huff
-"#define event" @storage.event.huff
-"#define error" @storage.function.huff
-"#define constant" @storage.constant.huff
-"#define table" @storage.macro.huff
-"#define test" @storage.macro.huff
+"#define macro" @keyword
+"#define fn" @keyword
+"#define jumptable" @keyword
+"#define jumptable__packed" @keyword
+"#define function" @keyword
+"#define event" @keyword
+"#define error" @keyword
+"#define constant" @keyword
+"#define table" @keyword
+"#define test" @keyword
 
-"takes" @storage.takes.huff
-"returns" @storage.returns.huff
+"takes" @keyword
+"returns" @keyword
 
 ;; --------------------------
 ;; Function/Macro Names
 ;; --------------------------
-(declaration_macro name: (identifier) @entity.name.function.huff)
-(declaration_fn name: (identifier) @entity.name.function.huff)
-(declaration_jumptable name: (identifier) @entity.name.function.huff)
-(declaration_jumptable_packed name: (identifier) @entity.name.function.huff)
-(declaration_table name: (identifier) @entity.name.function.huff)
-(declaration_test name: (identifier) @entity.name.function.huff)
-(interface_function name: (identifier) @entity.name.function.huff)
-(interface_event name: (identifier) @entity.name.function.huff)
-(error_definition name: (identifier) @entity.name.function.huff)
+(declaration_macro name: (identifier) @function)
+(declaration_fn name: (identifier) @function)
+(declaration_jumptable name: (identifier) @function)
+(declaration_jumptable_packed name: (identifier) @function)
+(declaration_table name: (identifier) @function)
+(declaration_test name: (identifier) @function)
+(interface_function name: (identifier) @function)
+(interface_event name: (identifier) @function)
+(error_definition name: (identifier) @function)
 
 ;; --------------------------
 ;; Interface Types and Extensions
 ;; --------------------------
-(interface_primitives) @variable.parameter
-"view" @storage.type.interface.huff
-"pure" @storage.type.interface.huff
-"payable" @storage.type.interface.huff
-"nonpayable" @storage.type.interface.huff
-"external" @storage.type.interface.huff
-"internal" @storage.type.interface.huff
-"public" @storage.type.interface.huff
-"private" @storage.type.interface.huff
-"memory" @keyword.modifier.huff
-"storage" @keyword.modifier.huff
-"calldata" @keyword.modifier.huff
+(interface_primitives) @type.builtin
+"view" @keyword
+"pure" @keyword
+"payable" @keyword
+"nonpayable" @keyword
+"external" @keyword
+"internal" @keyword
+"public" @keyword
+"private" @keyword
+"memory" @keyword
+"storage" @keyword
+"calldata" @keyword
 
 ;; --------------------------
-;; Opcodes - Single category for now
+;; Parameter Names
 ;; --------------------------
-(opcode) @entity.name.function.inputs.huff
+(parameter name: (identifier) @variable.parameter)
+
+;; --------------------------
+;; Opcodes
+;; --------------------------
+(opcode) @variable
+;; Jump opcodes within jumpdest
+"jump" @variable
+"jumpi" @variable
 
 ;; --------------------------
 ;; Template Parameters
@@ -78,78 +86,77 @@
 ;; --------------------------
 ;; Macro Calls
 ;; --------------------------
-(macro_call name: (identifier) @entity.name.function.huff)
+(macro_call name: (identifier) @function)
 
 ;; --------------------------
 ;; Constants
 ;; --------------------------
-(constant_definition name: (identifier) @constant.name.huff)
-(constant_reference) @constant.name.huff
+(constant_definition name: (identifier) @variable)
+(constant_reference) @variable
 
 ;; --------------------------
 ;; Numbers
 ;; --------------------------
-(number_decimal) @constant.numeric.decimal.huff
-(number_hex) @constant.numeric.hexadecimal.huff
+(number_decimal) @number
+(number_hex) @number
 
 ;; --------------------------
-;; Jump Targets/Labels
+;; Jump Targets
 ;; --------------------------
-(jumpdest_label name: (identifier) @entity.name.function.huff)
-(jumpdest name: (identifier) @entity.name.function.huff)
-(jumptable_body (identifier) @entity.name.function.huff)
+(jumpdest_label name: (identifier) @label)
+(jumpdest name: (identifier) @label)
+(jumptable_body (identifier) @label)
+
+((macro_call name: (identifier) @function)
+ (#match? @function "^[A-Z][A-Z0-9_]*$")) ; All caps suggests macro
 
 ;; --------------------------
 ;; Builtin Functions
 ;; --------------------------
-(builtin_function) @support.function.builtin.huff
-"__ERROR" @support.function.builtin.huff
-"__EVENT_HASH" @support.function.builtin.huff
-"__FUNC_SIG" @support.function.builtin.huff
-"__RIGHTPAD" @support.function.builtin.huff
-"__codesize" @support.function.builtin.huff
-"__tablesize" @support.function.builtin.huff
-"__tablestart" @support.function.builtin.huff
+(builtin_function) @function.builtin
+(builtin_function args: (identifier) @function)
+"__ERROR" @function.builtin
+"__EVENT_HASH" @function.builtin
+"__FUNC_SIG" @function.builtin
+"__RIGHTPAD" @function.builtin
+"__codesize" @function.builtin
+"__tablesize" @function.builtin
+"__tablestart" @function.builtin
 
 ;; --------------------------
 ;; Control/Import
 ;; --------------------------
-"#include" @keyword.control.import.huff
-(control_include path: (string_literal) @string.quoted.double.huff)
+"#include" @keyword.import
+(control_include path: (string_literal) @string)
 
 ;; --------------------------
 ;; Parameter Modifiers
 ;; --------------------------
-(modifier_indexed) @keyword.modifier.huff
+(modifier_indexed) @keyword
 
 ;; --------------------------
 ;; String Literals
 ;; --------------------------
-(string_literal) @string.quoted.double.huff
+(string_literal) @string
 
 ;; --------------------------
 ;; Decorators
 ;; --------------------------
-(decorator) @meta.annotation.huff
-(decorator_item name: (identifier) @meta.annotation.huff)
-(decorator_item args: (string_literal) @string.quoted.double.huff)
-(decorator_item args: (number) @constant.numeric.decimal.huff)
+(decorator) @attribute
+(decorator_item name: (identifier) @attribute)
+(decorator_item args: (string_literal) @string)
+(decorator_item args: (number) @number)
 
 ;; --------------------------
 ;; Operators and Punctuation
 ;; --------------------------
-"=" @keyword.operator.assignment.huff
-":" @punctuation.separator.huff
-"," @punctuation.separator.huff
-"(" @punctuation.bracket.round.huff
-")" @punctuation.bracket.round.huff
-"{" @punctuation.bracket.curly.huff
-"}" @punctuation.bracket.curly.huff
-"[" @punctuation.bracket.square.huff
-"]" @punctuation.bracket.square.huff
-"#[" @punctuation.bracket.square.huff
-
-;; --------------------------
-;; Generic Identifiers (fallback)
-;; --------------------------
-(identifier) @variable.other.readwrite.huff
+"=" @operator
+":" @punctuation.delimiter
+"," @punctuation.delimiter
+"(" @punctuation.bracket
+")" @punctuation.bracket
+"{" @punctuation.bracket
+"}" @punctuation.bracket
+"[" @punctuation.bracket
+"]" @punctuation.bracket
+"#[" @punctuation.bracket

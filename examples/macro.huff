@@ -1,3 +1,4 @@
+#include "huffmate/utils/Errors.huff"
 #define function addWord(uint256) pure returns (uint256)
 #define function solution(uint256[2][2] calldata x, uint256[2][2] calldata y) pure returns (uint256[2][2] memory)
 
@@ -41,4 +42,11 @@
         ADD_WORD()           // [result]
         0x00 mstore          // []
         0x20 0x00 return
+}
+
+#[calldata("0x0000000000000000000000000000000000000000000000000000000000000001"), value(0x01)]
+#define test MY_TEST() = {
+    0x00 calldataload   // [0x01]
+    callvalue           // [0x01, 0x01]
+    eq ASSERT()
 }

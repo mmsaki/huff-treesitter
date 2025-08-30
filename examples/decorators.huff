@@ -1,0 +1,14 @@
+#include "huffmate/utils/Errors.huff"
+
+#define macro ADD_TWO() = takes (2) returns (1) {
+    // Input Stack:  [a, b]
+    add           // [a + b]
+    // Return Stack: [a + b]
+}
+
+#[calldata("0x0000000000000000000000000000000000000000000000000000000000000001"), value(0x01)]
+#define test MY_TEST() = {
+    0x00 calldataload   // [0x01]
+    callvalue           // [0x01, 0x01]
+    eq ASSERT()
+}

@@ -1,0 +1,9 @@
+=== Simple Variable Declaration ===
+var x = 42;
+
+---
+
+(source_file
+  (variable_declaration
+    name: (identifier)
+    value: (number)))

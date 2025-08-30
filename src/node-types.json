@@ -734,6 +734,28 @@
           }
         ]
       },
+      "mutability": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "nonpayable",
+            "named": false
+          },
+          {
+            "type": "payable",
+            "named": false
+          },
+          {
+            "type": "pure",
+            "named": false
+          },
+          {
+            "type": "view",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -761,6 +783,28 @@
           {
             "type": "parameter_list",
             "named": true
+          }
+        ]
+      },
+      "visibility": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "external",
+            "named": false
+          },
+          {
+            "type": "internal",
+            "named": false
+          },
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
           }
         ]
       }
@@ -897,7 +941,7 @@
           "named": true
         },
         {
-          "type": "opcodes",
+          "type": "opcode",
           "named": true
         }
       ]
@@ -1093,29 +1137,620 @@
     }
   },
   {
-    "type": "opcodes",
+    "type": "opcode",
     "named": true,
-    "fields": {},
+    "fields": {
+      "opcode": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "add",
+            "named": false
+          },
+          {
+            "type": "addmod",
+            "named": false
+          },
+          {
+            "type": "address",
+            "named": false
+          },
+          {
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "balance",
+            "named": false
+          },
+          {
+            "type": "basefee",
+            "named": false
+          },
+          {
+            "type": "blobbasefee",
+            "named": false
+          },
+          {
+            "type": "blobhash",
+            "named": false
+          },
+          {
+            "type": "blockhash",
+            "named": false
+          },
+          {
+            "type": "byte",
+            "named": false
+          },
+          {
+            "type": "call",
+            "named": false
+          },
+          {
+            "type": "callcode",
+            "named": false
+          },
+          {
+            "type": "calldatacopy",
+            "named": false
+          },
+          {
+            "type": "calldataload",
+            "named": false
+          },
+          {
+            "type": "calldatasize",
+            "named": false
+          },
+          {
+            "type": "caller",
+            "named": false
+          },
+          {
+            "type": "callvalue",
+            "named": false
+          },
+          {
+            "type": "chainid",
+            "named": false
+          },
+          {
+            "type": "codecopy",
+            "named": false
+          },
+          {
+            "type": "codesize",
+            "named": false
+          },
+          {
+            "type": "coinbase",
+            "named": false
+          },
+          {
+            "type": "create",
+            "named": false
+          },
+          {
+            "type": "create2",
+            "named": false
+          },
+          {
+            "type": "delegatecall",
+            "named": false
+          },
+          {
+            "type": "difficulty",
+            "named": false
+          },
+          {
+            "type": "div",
+            "named": false
+          },
+          {
+            "type": "dup1",
+            "named": false
+          },
+          {
+            "type": "dup10",
+            "named": false
+          },
+          {
+            "type": "dup11",
+            "named": false
+          },
+          {
+            "type": "dup12",
+            "named": false
+          },
+          {
+            "type": "dup13",
+            "named": false
+          },
+          {
+            "type": "dup14",
+            "named": false
+          },
+          {
+            "type": "dup15",
+            "named": false
+          },
+          {
+            "type": "dup16",
+            "named": false
+          },
+          {
+            "type": "dup2",
+            "named": false
+          },
+          {
+            "type": "dup3",
+            "named": false
+          },
+          {
+            "type": "dup4",
+            "named": false
+          },
+          {
+            "type": "dup5",
+            "named": false
+          },
+          {
+            "type": "dup6",
+            "named": false
+          },
+          {
+            "type": "dup7",
+            "named": false
+          },
+          {
+            "type": "dup8",
+            "named": false
+          },
+          {
+            "type": "dup9",
+            "named": false
+          },
+          {
+            "type": "eq",
+            "named": false
+          },
+          {
+            "type": "exp",
+            "named": false
+          },
+          {
+            "type": "extcodecopy",
+            "named": false
+          },
+          {
+            "type": "extcodehash",
+            "named": false
+          },
+          {
+            "type": "extcodesize",
+            "named": false
+          },
+          {
+            "type": "gas",
+            "named": false
+          },
+          {
+            "type": "gaslimit",
+            "named": false
+          },
+          {
+            "type": "gasprice",
+            "named": false
+          },
+          {
+            "type": "gt",
+            "named": false
+          },
+          {
+            "type": "invalid",
+            "named": false
+          },
+          {
+            "type": "iszero",
+            "named": false
+          },
+          {
+            "type": "jump",
+            "named": false
+          },
+          {
+            "type": "jumpdest",
+            "named": false
+          },
+          {
+            "type": "jumpi",
+            "named": false
+          },
+          {
+            "type": "log0",
+            "named": false
+          },
+          {
+            "type": "log1",
+            "named": false
+          },
+          {
+            "type": "log2",
+            "named": false
+          },
+          {
+            "type": "log3",
+            "named": false
+          },
+          {
+            "type": "log4",
+            "named": false
+          },
+          {
+            "type": "lt",
+            "named": false
+          },
+          {
+            "type": "mcopy",
+            "named": false
+          },
+          {
+            "type": "mload",
+            "named": false
+          },
+          {
+            "type": "mod",
+            "named": false
+          },
+          {
+            "type": "msize",
+            "named": false
+          },
+          {
+            "type": "mstore",
+            "named": false
+          },
+          {
+            "type": "mstore8",
+            "named": false
+          },
+          {
+            "type": "mul",
+            "named": false
+          },
+          {
+            "type": "mulmod",
+            "named": false
+          },
+          {
+            "type": "not",
+            "named": false
+          },
+          {
+            "type": "number",
+            "named": false
+          },
+          {
+            "type": "or",
+            "named": false
+          },
+          {
+            "type": "origin",
+            "named": false
+          },
+          {
+            "type": "pc",
+            "named": false
+          },
+          {
+            "type": "pop",
+            "named": false
+          },
+          {
+            "type": "prevrandao",
+            "named": false
+          },
+          {
+            "type": "push0",
+            "named": false
+          },
+          {
+            "type": "push1",
+            "named": false
+          },
+          {
+            "type": "push10",
+            "named": false
+          },
+          {
+            "type": "push11",
+            "named": false
+          },
+          {
+            "type": "push12",
+            "named": false
+          },
+          {
+            "type": "push13",
+            "named": false
+          },
+          {
+            "type": "push14",
+            "named": false
+          },
+          {
+            "type": "push15",
+            "named": false
+          },
+          {
+            "type": "push16",
+            "named": false
+          },
+          {
+            "type": "push17",
+            "named": false
+          },
+          {
+            "type": "push18",
+            "named": false
+          },
+          {
+            "type": "push19",
+            "named": false
+          },
+          {
+            "type": "push2",
+            "named": false
+          },
+          {
+            "type": "push20",
+            "named": false
+          },
+          {
+            "type": "push21",
+            "named": false
+          },
+          {
+            "type": "push22",
+            "named": false
+          },
+          {
+            "type": "push23",
+            "named": false
+          },
+          {
+            "type": "push24",
+            "named": false
+          },
+          {
+            "type": "push25",
+            "named": false
+          },
+          {
+            "type": "push26",
+            "named": false
+          },
+          {
+            "type": "push27",
+            "named": false
+          },
+          {
+            "type": "push28",
+            "named": false
+          },
+          {
+            "type": "push29",
+            "named": false
+          },
+          {
+            "type": "push3",
+            "named": false
+          },
+          {
+            "type": "push30",
+            "named": false
+          },
+          {
+            "type": "push31",
+            "named": false
+          },
+          {
+            "type": "push32",
+            "named": false
+          },
+          {
+            "type": "push4",
+            "named": false
+          },
+          {
+            "type": "push5",
+            "named": false
+          },
+          {
+            "type": "push6",
+            "named": false
+          },
+          {
+            "type": "push7",
+            "named": false
+          },
+          {
+            "type": "push8",
+            "named": false
+          },
+          {
+            "type": "push9",
+            "named": false
+          },
+          {
+            "type": "return",
+            "named": false
+          },
+          {
+            "type": "returndatacopy",
+            "named": false
+          },
+          {
+            "type": "returndatasize",
+            "named": false
+          },
+          {
+            "type": "revert",
+            "named": false
+          },
+          {
+            "type": "sar",
+            "named": false
+          },
+          {
+            "type": "sdiv",
+            "named": false
+          },
+          {
+            "type": "selfbalance",
+            "named": false
+          },
+          {
+            "type": "selfdestruct",
+            "named": false
+          },
+          {
+            "type": "sgt",
+            "named": false
+          },
+          {
+            "type": "sha3",
+            "named": false
+          },
+          {
+            "type": "shl",
+            "named": false
+          },
+          {
+            "type": "shr",
+            "named": false
+          },
+          {
+            "type": "signextend",
+            "named": false
+          },
+          {
+            "type": "sload",
+            "named": false
+          },
+          {
+            "type": "slt",
+            "named": false
+          },
+          {
+            "type": "smod",
+            "named": false
+          },
+          {
+            "type": "sstore",
+            "named": false
+          },
+          {
+            "type": "staticcall",
+            "named": false
+          },
+          {
+            "type": "stop",
+            "named": false
+          },
+          {
+            "type": "sub",
+            "named": false
+          },
+          {
+            "type": "swap1",
+            "named": false
+          },
+          {
+            "type": "swap10",
+            "named": false
+          },
+          {
+            "type": "swap11",
+            "named": false
+          },
+          {
+            "type": "swap12",
+            "named": false
+          },
+          {
+            "type": "swap13",
+            "named": false
+          },
+          {
+            "type": "swap14",
+            "named": false
+          },
+          {
+            "type": "swap15",
+            "named": false
+          },
+          {
+            "type": "swap16",
+            "named": false
+          },
+          {
+            "type": "swap2",
+            "named": false
+          },
+          {
+            "type": "swap3",
+            "named": false
+          },
+          {
+            "type": "swap4",
+            "named": false
+          },
+          {
+            "type": "swap5",
+            "named": false
+          },
+          {
+            "type": "swap6",
+            "named": false
+          },
+          {
+            "type": "swap7",
+            "named": false
+          },
+          {
+            "type": "swap8",
+            "named": false
+          },
+          {
+            "type": "swap9",
+            "named": false
+          },
+          {
+            "type": "timestamp",
+            "named": false
+          },
+          {
+            "type": "tload",
+            "named": false
+          },
+          {
+            "type": "tstore",
+            "named": false
+          },
+          {
+            "type": "xor",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "opcodes_calculation",
-          "named": true
-        },
-        {
-          "type": "opcodes_io",
-          "named": true
-        },
-        {
-          "type": "opcodes_stack",
-          "named": true
-        },
-        {
-          "type": "opcodes_stop",
-          "named": true
-        },
         {
           "type": "template_parameter_call",
           "named": true
@@ -1124,44 +1759,27 @@
     }
   },
   {
-    "type": "opcodes_calculation",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "opcodes_io",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "opcodes_stack",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "opcodes_stop",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "parameter_list",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "parameter_with_modifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parameter_with_modifier",
+    "type": "parameter",
     "named": true,
     "fields": {
+      "location": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "calldata",
+            "named": false
+          },
+          {
+            "type": "memory",
+            "named": false
+          },
+          {
+            "type": "storage",
+            "named": false
+          }
+        ]
+      },
       "modifier": {
         "multiple": false,
         "required": false,
@@ -1189,6 +1807,21 @@
       "types": [
         {
           "type": "interface_primitives",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameter_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "parameter",
           "named": true
         }
       ]
@@ -1260,7 +1893,7 @@
           "named": true
         },
         {
-          "type": "opcodes",
+          "type": "opcode",
           "named": true
         }
       ]
@@ -1405,15 +2038,243 @@
     "named": false
   },
   {
+    "type": "add",
+    "named": false
+  },
+  {
+    "type": "addmod",
+    "named": false
+  },
+  {
+    "type": "address",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "balance",
+    "named": false
+  },
+  {
+    "type": "basefee",
+    "named": false
+  },
+  {
+    "type": "blobbasefee",
+    "named": false
+  },
+  {
+    "type": "blobhash",
+    "named": false
+  },
+  {
+    "type": "blockhash",
+    "named": false
+  },
+  {
+    "type": "byte",
+    "named": false
+  },
+  {
+    "type": "call",
+    "named": false
+  },
+  {
+    "type": "callcode",
+    "named": false
+  },
+  {
+    "type": "calldata",
+    "named": false
+  },
+  {
+    "type": "calldatacopy",
+    "named": false
+  },
+  {
+    "type": "calldataload",
+    "named": false
+  },
+  {
+    "type": "calldatasize",
+    "named": false
+  },
+  {
+    "type": "caller",
+    "named": false
+  },
+  {
+    "type": "callvalue",
+    "named": false
+  },
+  {
+    "type": "chainid",
+    "named": false
+  },
+  {
+    "type": "codecopy",
+    "named": false
+  },
+  {
+    "type": "codesize",
+    "named": false
+  },
+  {
+    "type": "coinbase",
+    "named": false
+  },
+  {
     "type": "comment_line",
     "named": true
+  },
+  {
+    "type": "create",
+    "named": false
+  },
+  {
+    "type": "create2",
+    "named": false
+  },
+  {
+    "type": "delegatecall",
+    "named": false
+  },
+  {
+    "type": "difficulty",
+    "named": false
+  },
+  {
+    "type": "div",
+    "named": false
+  },
+  {
+    "type": "dup1",
+    "named": false
+  },
+  {
+    "type": "dup10",
+    "named": false
+  },
+  {
+    "type": "dup11",
+    "named": false
+  },
+  {
+    "type": "dup12",
+    "named": false
+  },
+  {
+    "type": "dup13",
+    "named": false
+  },
+  {
+    "type": "dup14",
+    "named": false
+  },
+  {
+    "type": "dup15",
+    "named": false
+  },
+  {
+    "type": "dup16",
+    "named": false
+  },
+  {
+    "type": "dup2",
+    "named": false
+  },
+  {
+    "type": "dup3",
+    "named": false
+  },
+  {
+    "type": "dup4",
+    "named": false
+  },
+  {
+    "type": "dup5",
+    "named": false
+  },
+  {
+    "type": "dup6",
+    "named": false
+  },
+  {
+    "type": "dup7",
+    "named": false
+  },
+  {
+    "type": "dup8",
+    "named": false
+  },
+  {
+    "type": "dup9",
+    "named": false
+  },
+  {
+    "type": "eq",
+    "named": false
+  },
+  {
+    "type": "exp",
+    "named": false
+  },
+  {
+    "type": "extcodecopy",
+    "named": false
+  },
+  {
+    "type": "extcodehash",
+    "named": false
+  },
+  {
+    "type": "extcodesize",
+    "named": false
+  },
+  {
+    "type": "external",
+    "named": false
+  },
+  {
+    "type": "gas",
+    "named": false
+  },
+  {
+    "type": "gaslimit",
+    "named": false
+  },
+  {
+    "type": "gasprice",
+    "named": false
+  },
+  {
+    "type": "gt",
+    "named": false
   },
   {
     "type": "identifier",
     "named": true
   },
   {
+    "type": "internal",
+    "named": false
+  },
+  {
+    "type": "invalid",
+    "named": false
+  },
+  {
+    "type": "iszero",
+    "named": false
+  },
+  {
     "type": "jump",
+    "named": false
+  },
+  {
+    "type": "jumpdest",
     "named": false
   },
   {
@@ -1421,8 +2282,68 @@
     "named": false
   },
   {
+    "type": "log0",
+    "named": false
+  },
+  {
+    "type": "log1",
+    "named": false
+  },
+  {
+    "type": "log2",
+    "named": false
+  },
+  {
+    "type": "log3",
+    "named": false
+  },
+  {
+    "type": "log4",
+    "named": false
+  },
+  {
+    "type": "lt",
+    "named": false
+  },
+  {
+    "type": "mcopy",
+    "named": false
+  },
+  {
+    "type": "memory",
+    "named": false
+  },
+  {
+    "type": "mload",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
     "type": "modifier_indexed",
     "named": true
+  },
+  {
+    "type": "msize",
+    "named": false
+  },
+  {
+    "type": "mstore",
+    "named": false
+  },
+  {
+    "type": "mstore8",
+    "named": false
+  },
+  {
+    "type": "mul",
+    "named": false
+  },
+  {
+    "type": "mulmod",
+    "named": false
   },
   {
     "type": "natspec_tag_author",
@@ -1445,6 +2366,14 @@
     "named": false
   },
   {
+    "type": "not",
+    "named": false
+  },
+  {
+    "type": "number",
+    "named": false
+  },
+  {
     "type": "number_decimal",
     "named": true
   },
@@ -1453,7 +2382,35 @@
     "named": true
   },
   {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "origin",
+    "named": false
+  },
+  {
     "type": "payable",
+    "named": false
+  },
+  {
+    "type": "pc",
+    "named": false
+  },
+  {
+    "type": "pop",
+    "named": false
+  },
+  {
+    "type": "prevrandao",
+    "named": false
+  },
+  {
+    "type": "private",
+    "named": false
+  },
+  {
+    "type": "public",
     "named": false
   },
   {
@@ -1461,7 +2418,287 @@
     "named": false
   },
   {
+    "type": "push0",
+    "named": false
+  },
+  {
+    "type": "push1",
+    "named": false
+  },
+  {
+    "type": "push10",
+    "named": false
+  },
+  {
+    "type": "push11",
+    "named": false
+  },
+  {
+    "type": "push12",
+    "named": false
+  },
+  {
+    "type": "push13",
+    "named": false
+  },
+  {
+    "type": "push14",
+    "named": false
+  },
+  {
+    "type": "push15",
+    "named": false
+  },
+  {
+    "type": "push16",
+    "named": false
+  },
+  {
+    "type": "push17",
+    "named": false
+  },
+  {
+    "type": "push18",
+    "named": false
+  },
+  {
+    "type": "push19",
+    "named": false
+  },
+  {
+    "type": "push2",
+    "named": false
+  },
+  {
+    "type": "push20",
+    "named": false
+  },
+  {
+    "type": "push21",
+    "named": false
+  },
+  {
+    "type": "push22",
+    "named": false
+  },
+  {
+    "type": "push23",
+    "named": false
+  },
+  {
+    "type": "push24",
+    "named": false
+  },
+  {
+    "type": "push25",
+    "named": false
+  },
+  {
+    "type": "push26",
+    "named": false
+  },
+  {
+    "type": "push27",
+    "named": false
+  },
+  {
+    "type": "push28",
+    "named": false
+  },
+  {
+    "type": "push29",
+    "named": false
+  },
+  {
+    "type": "push3",
+    "named": false
+  },
+  {
+    "type": "push30",
+    "named": false
+  },
+  {
+    "type": "push31",
+    "named": false
+  },
+  {
+    "type": "push32",
+    "named": false
+  },
+  {
+    "type": "push4",
+    "named": false
+  },
+  {
+    "type": "push5",
+    "named": false
+  },
+  {
+    "type": "push6",
+    "named": false
+  },
+  {
+    "type": "push7",
+    "named": false
+  },
+  {
+    "type": "push8",
+    "named": false
+  },
+  {
+    "type": "push9",
+    "named": false
+  },
+  {
+    "type": "return",
+    "named": false
+  },
+  {
+    "type": "returndatacopy",
+    "named": false
+  },
+  {
+    "type": "returndatasize",
+    "named": false
+  },
+  {
     "type": "returns",
+    "named": false
+  },
+  {
+    "type": "revert",
+    "named": false
+  },
+  {
+    "type": "sar",
+    "named": false
+  },
+  {
+    "type": "sdiv",
+    "named": false
+  },
+  {
+    "type": "selfbalance",
+    "named": false
+  },
+  {
+    "type": "selfdestruct",
+    "named": false
+  },
+  {
+    "type": "sgt",
+    "named": false
+  },
+  {
+    "type": "sha3",
+    "named": false
+  },
+  {
+    "type": "shl",
+    "named": false
+  },
+  {
+    "type": "shr",
+    "named": false
+  },
+  {
+    "type": "signextend",
+    "named": false
+  },
+  {
+    "type": "sload",
+    "named": false
+  },
+  {
+    "type": "slt",
+    "named": false
+  },
+  {
+    "type": "smod",
+    "named": false
+  },
+  {
+    "type": "sstore",
+    "named": false
+  },
+  {
+    "type": "staticcall",
+    "named": false
+  },
+  {
+    "type": "stop",
+    "named": false
+  },
+  {
+    "type": "storage",
+    "named": false
+  },
+  {
+    "type": "sub",
+    "named": false
+  },
+  {
+    "type": "swap1",
+    "named": false
+  },
+  {
+    "type": "swap10",
+    "named": false
+  },
+  {
+    "type": "swap11",
+    "named": false
+  },
+  {
+    "type": "swap12",
+    "named": false
+  },
+  {
+    "type": "swap13",
+    "named": false
+  },
+  {
+    "type": "swap14",
+    "named": false
+  },
+  {
+    "type": "swap15",
+    "named": false
+  },
+  {
+    "type": "swap16",
+    "named": false
+  },
+  {
+    "type": "swap2",
+    "named": false
+  },
+  {
+    "type": "swap3",
+    "named": false
+  },
+  {
+    "type": "swap4",
+    "named": false
+  },
+  {
+    "type": "swap5",
+    "named": false
+  },
+  {
+    "type": "swap6",
+    "named": false
+  },
+  {
+    "type": "swap7",
+    "named": false
+  },
+  {
+    "type": "swap8",
+    "named": false
+  },
+  {
+    "type": "swap9",
     "named": false
   },
   {
@@ -1469,7 +2706,23 @@
     "named": false
   },
   {
+    "type": "timestamp",
+    "named": false
+  },
+  {
+    "type": "tload",
+    "named": false
+  },
+  {
+    "type": "tstore",
+    "named": false
+  },
+  {
     "type": "view",
+    "named": false
+  },
+  {
+    "type": "xor",
     "named": false
   },
   {

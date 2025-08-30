@@ -20,10 +20,11 @@ module.exports = grammar({
       $.interface,
       $.error,
       $.control,
+      $.jumpdest,
       $.macro_call,
       $.opcodes,
       $.constant,
-      $.jump_label,
+      $.jumpdest_label,
       $.macro_body,
       $.decorator,
       $.builtin_function,
@@ -79,10 +80,7 @@ module.exports = grammar({
     control_import: $ => token("#include"),
     control_include: $ => seq(
       "#include",
-      field("path", choice(
-        /\"[^\"]*\"/,
-        /'[^']*'/
-      ))
+      field("path", $.string_literal)
     ),
     number: $ => choice(
       $.number_decimal,
@@ -246,7 +244,14 @@ module.exports = grammar({
       field("name", /[A-Z_]+/),
       "]"
     ),
-    jump_label: $ => seq(
+    jumpdest: $ => prec(1, seq(
+      field("name", $.identifier),
+      choice(
+        seq(field("opcode", "jumpi")),
+        seq(field("opcode", "jump"))
+      )
+    )),
+    jumpdest_label: $ => seq(
       field("name", $.identifier),
       ":"
     ),

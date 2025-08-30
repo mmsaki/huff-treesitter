@@ -265,6 +265,7 @@ module.exports = grammar({
     ),
     jumpdest: $ => prec(1, seq(
       field("name", $.identifier),
+      optional($.comment),
       choice(
         seq(field("opcode", "jumpi")),
         seq(field("opcode", "jump"))

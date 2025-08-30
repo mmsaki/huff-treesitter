@@ -84,7 +84,7 @@ Simple Macro
       takes_count: (number_decimal)
       returns_count: (number_decimal)
       (macro_body
-        (jump_label
+        (jumpdest_label
           name: (identifier))
         (number
           (number_hex))

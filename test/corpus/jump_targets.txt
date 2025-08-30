@@ -1,0 +1,58 @@
+================
+Jump Target References
+================
+
+#define macro TEST() = takes (0) returns (0) {
+    success jumpi
+    error jump
+    label_one jumpi
+    
+    success:
+        0x01 0x00 return
+    
+    error:
+        0x00 0x00 revert
+        
+    label_one:
+        0x42 0x00 mstore
+}
+
+---
+
+(source_file
+  (declaration
+    (declaration_macro
+      name: (identifier)
+      takes_count: (number_decimal)
+      returns_count: (number_decimal)
+      (macro_body
+        (jumpdest
+          name: (identifier))
+        (jumpdest
+          name: (identifier))
+        (jumpdest
+          name: (identifier))
+        (jumpdest_label
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (jumpdest_label
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))
+        (jumpdest_label
+          name: (identifier))
+        (number
+          (number_hex))
+        (number
+          (number_hex))
+        (macro_call
+          name: (identifier))))))

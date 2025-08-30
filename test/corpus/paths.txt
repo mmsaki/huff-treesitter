@@ -1,0 +1,64 @@
+================
+Include with Path Access
+================
+
+#include "huffmate/utils/Errors.huff"
+#include 'contracts/interfaces/IERC20.huff'
+
+---
+
+(source_file
+  (control
+    (control_include
+      path: (string_literal)))
+  (control
+    (control_include
+      path: (string_literal))))
+
+================
+Decorator Arguments with Values
+================
+
+#[calldata("0x0000000000000000000000000000000000000000000000000000000000000001")]
+#[value(0x100), gas(300000)]
+
+---
+
+(source_file
+  (decorator
+    (decorator_item
+      name: (identifier)
+      args: (string_literal)))
+  (decorator
+    (decorator_item
+      name: (identifier)
+      args: (number
+        (number_hex)))
+    (decorator_item
+      name: (identifier)
+      args: (number
+        (number_decimal)))))
+
+================
+Mixed String and Path Usage
+================
+
+#include "path/to/file.huff"
+#[test_data("some test string")]
+#define constant FILE_HASH = 0x123abc
+
+---
+
+(source_file
+  (control
+    (control_include
+      path: (string_literal)))
+  (decorator
+    (decorator_item
+      name: (identifier)
+      args: (string_literal)))
+  (constant
+    (constant_definition
+      name: (identifier)
+      value: (number
+        (number_hex)))))

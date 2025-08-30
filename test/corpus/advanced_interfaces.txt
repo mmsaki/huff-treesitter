@@ -13,6 +13,12 @@ Function with Memory Location
       parameters: (parameter_list
         (parameter
           (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
           name: (identifier)))
       returns: (parameter_list
         (parameter

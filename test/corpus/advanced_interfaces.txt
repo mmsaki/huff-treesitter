@@ -1,133 +1,38 @@
 ================
-Indexed Parameters in Events
+Function with Memory Location
 ================
 
-#define event Transfer(address indexed from, address indexed to, uint256 amount)
+#define function test(bytes memory data, string calldata name, uint256 storage value) external returns (bytes memory result)
 
 ---
 
 (source_file
   (interface
-    (interface_event
+    (interface_function
       name: (identifier)
       parameters: (parameter_list
         (parameter
           (interface_primitives)
-          modifier: (modifier_indexed)
           name: (identifier))
         (parameter
           (interface_primitives)
-          modifier: (modifier_indexed)
           name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
         (parameter
           (interface_primitives)
           name: (identifier))))))
 
 ================
-Jumptable Definition
+Function with All Visibility Modifiers
 ================
 
-#define jumptable SWITCH_TABLE {
-    jump_one jump_two jump_three jump_four
-}
-
----
-
-(source_file
-  (declaration
-    (declaration_jumptable
-      name: (identifier)
-      body: (jumptable_body
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)))))
-
-================
-All Builtin Functions
-================
-
-__ERROR(PanicError)
-__EVENT_HASH(TestEvent)
-__FUNC_SIG(myFunction)
-__RIGHTPAD(0x42)
-__codesize(MACRO_NAME)
-__tablesize(SWITCH_TABLE)
-__tablestart(SWITCH_TABLE)
-
----
-
-(source_file
-  (builtin_function
-    args: (identifier))
-  (builtin_function
-    args: (identifier))
-  (builtin_function
-    args: (identifier))
-  (builtin_function
-    args: (number
-      (number_hex)))
-  (builtin_function
-    args: (identifier))
-  (builtin_function
-    args: (identifier))
-  (builtin_function
-    args: (identifier)))
-
-================
-Function with All Modifiers
-================
-
-#define function test(uint256) pure returns (bool)
-#define function test2(uint256) view returns (bool)
-#define function test3(uint256) nonpayable returns (bool)
-#define function test4(uint256) payable returns (bool)
-
----
-
-(source_file
-  (interface
-    (interface_function
-      name: (identifier)
-      parameters: (parameter_list
-        (parameter
-          (interface_primitives)))
-      returns: (parameter_list
-        (parameter
-          (interface_primitives)))))
-  (interface
-    (interface_function
-      name: (identifier)
-      parameters: (parameter_list
-        (parameter
-          (interface_primitives)))
-      returns: (parameter_list
-        (parameter
-          (interface_primitives)))))
-  (interface
-    (interface_function
-      name: (identifier)
-      parameters: (parameter_list
-        (parameter
-          (interface_primitives)))
-      returns: (parameter_list
-        (parameter
-          (interface_primitives)))))
-  (interface
-    (interface_function
-      name: (identifier)
-      parameters: (parameter_list
-        (parameter
-          (interface_primitives)))
-      returns: (parameter_list
-        (parameter
-          (interface_primitives))))))
-
-================
-Function Return with Name
-================
-
-#define function getData() view returns (bytes data)
+#define function external_func() external returns (bool)
+#define function internal_func() internal returns (bool)
+#define function public_func() public returns (bool)
+#define function private_func() private returns (bool)
 
 ---
 
@@ -138,42 +43,34 @@ Function Return with Name
       parameters: (parameter_list)
       returns: (parameter_list
         (parameter
-          (interface_primitives)
-          name: (identifier))))))
-
-================
-Complex Event with Mixed Parameters
-================
-
-#define event ComplexEvent(address indexed sender, bytes32 indexed id, uint256 value, string message)
-
----
-
-(source_file
+          (interface_primitives)))))
   (interface
-    (interface_event
+    (interface_function
       name: (identifier)
-      parameters: (parameter_list
+      parameters: (parameter_list)
+      returns: (parameter_list
         (parameter
-          (interface_primitives)
-          modifier: (modifier_indexed)
-          name: (identifier))
+          (interface_primitives)))))
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list)
+      returns: (parameter_list
         (parameter
-          (interface_primitives)
-          modifier: (modifier_indexed)
-          name: (identifier))
+          (interface_primitives)))))
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list)
+      returns: (parameter_list
         (parameter
-          (interface_primitives)
-          name: (identifier))
-        (parameter
-          (interface_primitives)
-          name: (identifier))))))
+          (interface_primitives))))))
 
 ================
-Function Parameter Names
+Function with Visibility and Mutability
 ================
 
-#define function transfer(address to, uint256 amount) nonpayable returns (bool success)
+#define function transfer(address to, uint256 amount) external nonpayable returns (bool success)
 
 ---
 
@@ -189,6 +86,84 @@ Function Parameter Names
           (interface_primitives)
           name: (identifier)))
       returns: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Event with Memory Locations
+================
+
+#define event Transfer(address indexed from, address indexed to, bytes memory data, string calldata message)
+
+---
+
+(source_file
+  (interface
+    (interface_event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          modifier: (modifier_indexed)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          modifier: (modifier_indexed)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Error with Memory Locations
+================
+
+#define error InvalidData(bytes memory data, string calldata reason)
+
+---
+
+(source_file
+  (error
+    (error_definition
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Complex Function with All Features
+================
+
+#define function processData(bytes calldata input, uint256[] memory amounts, address storage owner) external payable returns (bytes memory result, bool[] memory success)
+
+---
+
+(source_file
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
         (parameter
           (interface_primitives)
           name: (identifier))))))

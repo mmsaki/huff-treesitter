@@ -38,14 +38,13 @@ Interface Function
     (interface_function
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives))
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)))
       returns: (parameter_list
-        (parameter_with_modifier
-          (interface_primitives)
-          name: (identifier))))))
+        (parameter
+          (interface_primitives))))))
 
 ================
 Interface Event
@@ -60,10 +59,10 @@ Interface Event
     (interface_event
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           modifier: (modifier_indexed))
-        (parameter_with_modifier
+        (parameter
           (interface_primitives))))))
 
 ================
@@ -90,8 +89,7 @@ Simple Macro
           (number_hex))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))))))
+        (opcode)))))
 
 ================
 Comments
@@ -119,5 +117,4 @@ Constant Reference
 (source_file
   (constant
     (constant_reference))
-  (macro_call
-    name: (identifier)))
+  (opcode))

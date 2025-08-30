@@ -43,13 +43,13 @@ Error with Parameters
     (error_definition
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)))))
   (error
     (error_definition
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives))))))
 
 ================
@@ -107,12 +107,9 @@ Test Definition
       body: (macro_body
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))
-        (macro_call
-          name: (identifier))
-        (macro_call
-          name: (identifier))
+        (opcode)
+        (opcode)
+        (opcode)
         (macro_call
           name: (identifier))))))
 
@@ -140,18 +137,15 @@ Complex Macro with Builtins
           args: (identifier))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))
+        (opcode)
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))
+        (opcode)
         (number
           (number_hex))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))))))
+        (opcode)))))
 
 ================
 Function with Parameter Names and Modifiers
@@ -166,14 +160,14 @@ Function with Parameter Names and Modifiers
     (interface_function
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           name: (identifier))
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           name: (identifier)))
       returns: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           name: (identifier))))))
 
@@ -190,9 +184,9 @@ Simple Event with Name
     (interface_event
       name: (identifier)
       parameters: (parameter_list
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           name: (identifier))
-        (parameter_with_modifier
+        (parameter
           (interface_primitives)
           name: (identifier))))))

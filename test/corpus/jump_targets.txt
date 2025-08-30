@@ -38,21 +38,18 @@ Jump Target References
           (number_hex))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))
+        (opcode)
         (jumpdest_label
           name: (identifier))
         (number
           (number_hex))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))
+        (opcode)
         (jumpdest_label
           name: (identifier))
         (number
           (number_hex))
         (number
           (number_hex))
-        (macro_call
-          name: (identifier))))))
+        (opcode)))))

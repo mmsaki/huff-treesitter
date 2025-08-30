@@ -1,0 +1,153 @@
+================
+Dynamic Arrays
+================
+
+#define function processDynamicArrays(uint256[] amounts, address[] recipients, bytes[] data) external returns (string[] results)
+
+---
+
+(source_file
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Fixed Size Arrays
+================
+
+#define function processFixedArrays(uint256[10] amounts, bytes32[5] hashes, bool[3] flags) external returns (address[2] owners)
+
+---
+
+(source_file
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Arrays with Memory Locations
+================
+
+#define function processArraysWithMemory(uint256[] memory amounts, bytes calldata data, string[] storage names) external
+
+---
+
+(source_file
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Events with Arrays
+================
+
+#define event BatchTransfer(address[] indexed recipients, uint256[10] amounts, bytes32[] data)
+
+---
+
+(source_file
+  (interface
+    (interface_event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          modifier: (modifier_indexed)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Errors with Arrays
+================
+
+#define error InvalidArrays(uint256[] amounts, string[] reasons)
+
+---
+
+(source_file
+  (error
+    (error_definition
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))
+
+================
+Mixed Array Types
+================
+
+#define function mixedArrays(uint8[] small, uint256[100] large, bytes1[32] tiny, bytes[] dynamic) external returns (int256[5] results, bool[] flags)
+
+---
+
+(source_file
+  (interface
+    (interface_function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier)))
+      returns: (parameter_list
+        (parameter
+          (interface_primitives)
+          name: (identifier))
+        (parameter
+          (interface_primitives)
+          name: (identifier))))))

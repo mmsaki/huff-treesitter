@@ -93,6 +93,9 @@
 (number_decimal) @number
 (number_hex) @number
 
+;; Array size numbers in interface types
+(interface_primitives array_size: (number_decimal) @number)
+
 ;; --------------------------
 ;; Jump Targets
 ;; --------------------------

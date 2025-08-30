@@ -39,17 +39,21 @@ Fixed Size Arrays
       name: (identifier)
       parameters: (parameter_list
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier)))
       returns: (parameter_list
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))))))
 
 ================
@@ -93,7 +97,8 @@ Events with Arrays
           modifier: (modifier_indexed)
           name: (identifier))
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
           (interface_primitives)
@@ -136,17 +141,20 @@ Mixed Array Types
           (interface_primitives)
           name: (identifier))
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
           (interface_primitives)
           name: (identifier)))
       returns: (parameter_list
         (parameter
-          (interface_primitives)
+          (interface_primitives
+            array_size: (number_decimal))
           name: (identifier))
         (parameter
           (interface_primitives)

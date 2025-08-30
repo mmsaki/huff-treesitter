@@ -42,6 +42,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "jumpdest"
+        },
+        {
+          "type": "SYMBOL",
           "name": "macro_call"
         },
         {
@@ -54,7 +58,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "jump_label"
+          "name": "jumpdest_label"
         },
         {
           "type": "SYMBOL",
@@ -331,17 +335,8 @@
           "type": "FIELD",
           "name": "path",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "\\\"[^\\\"]*\\\""
-              },
-              {
-                "type": "PATTERN",
-                "value": "'[^']*'"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "string_literal"
           }
         }
       ]
@@ -1421,7 +1416,55 @@
         }
       ]
     },
-    "jump_label": {
+    "jumpdest": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "opcode",
+                    "content": {
+                      "type": "STRING",
+                      "value": "jumpi"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "opcode",
+                    "content": {
+                      "type": "STRING",
+                      "value": "jump"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "jumpdest_label": {
       "type": "SEQ",
       "members": [
         {

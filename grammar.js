@@ -45,28 +45,6 @@ module.exports = grammar({
       )),
       "*/"
     )),
-    natspec_tags: $ => choice(
-      $.natspec_tag_title,
-      $.natspec_tag_author,
-      $.natspec_tag_notice,
-      $.natspec_tag_dev,
-      $.natspec_tag_param,
-      $.natspec_tag_return
-    ),
-    natspec_tag_title: $ => token(/@title/),
-    natspec_tag_author: $ => token(/@author/),
-    natspec_tag_notice: $ => token(/@notice/),
-    natspec_tag_dev: $ => token(/@dev/),
-    natspec_tag_param: $ => prec.right(seq(
-      field("keyword", "@param"),
-      optional(field("param_name", $.identifier)),
-      optional(field("description", /[^\n\r*]*/)),
-    )),
-    natspec_tag_return: $ => prec.right(seq(
-      field("keyword", "@return"),
-      optional(field("param_name", $.identifier)),
-      optional(field("description", /[^\n\r*]*/)),
-    )),
     identifier: $ => /[A-Za-z_]\w*/,
     comment_line: $ => token(seq("//", /.*/)),
     comment_block: $ => seq(

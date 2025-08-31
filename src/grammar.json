@@ -2118,12 +2118,69 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_patterns"
+            "name": "_macro_body_patterns"
           }
         },
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "_macro_body_patterns": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "natspec"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "error"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "control"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "jumpdest"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "opcode"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "constant"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "jumpdest_label"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro_body"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "decorator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "builtin_function"
         }
       ]
     },

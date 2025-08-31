@@ -1057,19 +1057,11 @@
           "named": true
         },
         {
-          "type": "declaration",
-          "named": true
-        },
-        {
           "type": "decorator",
           "named": true
         },
         {
           "type": "error",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {

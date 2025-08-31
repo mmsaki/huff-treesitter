@@ -276,8 +276,23 @@ module.exports = grammar({
     ),
     macro_body: $ => seq(
       "{",
-      repeat($._patterns),
+      repeat($._macro_body_patterns),
       "}"
+    ),
+    _macro_body_patterns: $ => choice(
+      $.natspec,
+      $.comment,
+      $.number,
+      $.error,
+      $.control,
+      $.jumpdest,
+      $.opcode,
+      $.macro_call,
+      $.constant,
+      $.jumpdest_label,
+      $.macro_body,
+      $.decorator,
+      $.builtin_function,
     ),
     declaration_table: $ => seq(
       field("define_keyword", "#define"),

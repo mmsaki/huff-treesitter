@@ -946,7 +946,15 @@
             "named": false
           },
           {
+            "type": "int",
+            "named": false
+          },
+          {
             "type": "string",
+            "named": false
+          },
+          {
+            "type": "uint",
             "named": false
           }
         ]
@@ -2299,6 +2307,10 @@
     "named": false
   },
   {
+    "type": "int",
+    "named": false
+  },
+  {
     "type": "internal",
     "named": false
   },
@@ -2772,6 +2784,10 @@
   },
   {
     "type": "tstore",
+    "named": false
+  },
+  {
+    "type": "uint",
     "named": false
   },
   {

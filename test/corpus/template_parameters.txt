@@ -9,7 +9,7 @@ Template Parameter Call - Basic
 (source_file
   (opcode
     (template_parameter_call
-      template_name: (identifier)))
+      template_name: (template_token)))
   (opcode))
 
 ================
@@ -23,7 +23,7 @@ Template Parameter Call - With Underscore
 (source_file
   (opcode
     (template_parameter_call
-      template_name: (identifier)))
+      template_name: (template_token)))
   (opcode))
 
 ================
@@ -45,7 +45,7 @@ Template Parameter Call - Complex Macro
       (macro_body
         (opcode
           (template_parameter_call
-            template_name: (identifier)))
+            template_name: (template_token)))
         (opcode)))))
 
 ================
@@ -60,9 +60,9 @@ Template Parameter Call - Multiple in Sequence
 (source_file
   (opcode
     (template_parameter_call
-      template_name: (identifier)))
+      template_name: (template_token)))
   (opcode)
   (opcode
     (template_parameter_call
-      template_name: (identifier)))
+      template_name: (template_token)))
   (opcode))

@@ -1,0 +1,68 @@
+================
+Template Parameter Call - Basic
+================
+
+<free_memory> mload
+
+---
+
+(source_file
+  (opcode
+    (template_parameter_call
+      template_name: (identifier)))
+  (opcode))
+
+================
+Template Parameter Call - With Underscore
+================
+
+<test_value> sload
+
+---
+
+(source_file
+  (opcode
+    (template_parameter_call
+      template_name: (identifier)))
+  (opcode))
+
+================
+Template Parameter Call - Complex Macro
+================
+
+#define macro GET_VALUE() = takes (0) returns (1) {
+    <storage_slot> sload
+}
+
+---
+
+(source_file
+  (declaration
+    (declaration_macro
+      name: (identifier)
+      takes_count: (number_decimal)
+      returns_count: (number_decimal)
+      (macro_body
+        (opcode
+          (template_parameter_call
+            template_name: (identifier)))
+        (opcode)))))
+
+================
+Template Parameter Call - Multiple in Sequence
+================
+
+<slot1> sload
+<slot2> sstore
+
+---
+
+(source_file
+  (opcode
+    (template_parameter_call
+      template_name: (identifier)))
+  (opcode)
+  (opcode
+    (template_parameter_call
+      template_name: (identifier)))
+  (opcode))

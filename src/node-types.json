@@ -1933,7 +1933,32 @@
   {
     "type": "template_parameter_call",
     "named": true,
-    "fields": {}
+    "fields": {
+      "template_braces": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          }
+        ]
+      },
+      "template_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "#[",
@@ -1972,7 +1997,15 @@
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
     "named": false
   },
   {

@@ -1815,7 +1815,7 @@
     },
     "template_parameter_call": {
       "type": "FIELD",
-      "name": "parameter",
+      "name": "template",
       "content": {
         "type": "TOKEN",
         "content": {

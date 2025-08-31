@@ -232,7 +232,7 @@ module.exports = grammar({
       )),
       $.template_parameter_call
     ),
-    template_parameter_call: $ => field("parameter", token(/<\s*[A-Za-z0-9_]+\s*>/)),
+    template_parameter_call: $ => field("template", token(/<\s*[A-Za-z0-9_]+\s*>/)),
     macro_call: $ => seq(
       field("name", $.identifier),
       optional(seq(

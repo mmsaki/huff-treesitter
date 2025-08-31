@@ -234,9 +234,10 @@ module.exports = grammar({
     ),
     template_parameter_call: $ => seq(
       field("template_braces", "<"),
-      field("template_name", $.identifier),
+      field("template_name", $.template_token),
       field("template_braces", ">")
     ),
+    template_token: $ => token(/[A-Za-z_]\w*/),
     macro_call: $ => seq(
       field("name", $.identifier),
       optional(seq(

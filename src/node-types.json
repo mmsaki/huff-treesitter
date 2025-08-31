@@ -733,6 +733,11 @@
     }
   },
   {
+    "type": "identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "interface",
     "named": true,
     "fields": {},
@@ -1953,12 +1958,17 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "template_token",
             "named": true
           }
         ]
       }
     }
+  },
+  {
+    "type": "template_token",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "#[",
@@ -2287,10 +2297,6 @@
   {
     "type": "gt",
     "named": false
-  },
-  {
-    "type": "identifier",
-    "named": true
   },
   {
     "type": "internal",

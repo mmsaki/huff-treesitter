@@ -1829,7 +1829,7 @@
           "name": "template_name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "template_token"
           }
         },
         {
@@ -1841,6 +1841,13 @@
           }
         }
       ]
+    },
+    "template_token": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[A-Za-z_]\\w*"
+      }
     },
     "macro_call": {
       "type": "SEQ",

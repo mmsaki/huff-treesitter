@@ -1729,6 +1729,10 @@
               {
                 "type": "SYMBOL",
                 "name": "builtin_function"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string_literal"
               }
             ]
           }

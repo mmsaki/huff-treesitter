@@ -63,6 +63,10 @@
           {
             "type": "number",
             "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
           }
         ]
       }

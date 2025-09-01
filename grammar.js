@@ -379,7 +379,7 @@ module.exports = grammar({
       "constant",
       field("name", $.identifier),
       "=",
-      field("value", choice($.number, $.builtin_function))
+      field("value", choice($.number, $.builtin_function, $.string_literal))
     ),
     referenced_parameter: $ => seq(
       "<",

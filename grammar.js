@@ -263,21 +263,20 @@ module.exports = grammar({
         optional(field("parameters", sep1($.identifier, ","))),
         ")"
       ),
-      seq(
-        "=",
-        field("takes_keyword", "takes"),
-        "(",
-        field("takes_count", $.number),
-        ")",
-        optional(seq(
-          field("returns_keyword", "returns"),
-          "(",
-          field("returns_count", $.number),
-          ")"
-        ))
-      ),
+      "=",
+      optional($._takes_returns),
       $.macro_body
     )),
+    _takes_returns: $ => seq(
+      field("takes_keyword", "takes"),
+      "(",
+      field("takes_count", $.number),
+      ")",
+      field("returns_keyword", "returns"),
+      "(",
+      field("returns_count", $.number),
+      ")"
+    ),
     fn: $ => prec.right(seq(
       "fn",
       field("name", $.identifier),
@@ -286,19 +285,8 @@ module.exports = grammar({
         optional(field("parameters", sep1($.identifier, ","))),
         ")"
       ),
-      seq(
-        "=",
-        field("takes_keyword", "takes"),
-        "(",
-        field("takes_count", $.number),
-        ")",
-        optional(seq(
-          field("returns_keyword", "returns"),
-          "(",
-          field("returns_count", $.number),
-          ")"
-        ))
-      ),
+      "=",
+      optional($._takes_returns),
       $.macro_body
     )),
     jumptable: $ => seq(

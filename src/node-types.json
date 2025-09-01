@@ -285,7 +285,7 @@
       },
       "takes_count": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "number",
@@ -295,7 +295,7 @@
       },
       "takes_keyword": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "takes",
@@ -554,7 +554,7 @@
       },
       "takes_count": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "number",
@@ -564,7 +564,7 @@
       },
       "takes_keyword": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "takes",

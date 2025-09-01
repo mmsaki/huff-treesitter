@@ -4,7 +4,7 @@
     "named": true,
     "fields": {
       "args": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1569,6 +1569,10 @@
   },
   {
     "type": "]",
+    "named": false
+  },
+  {
+    "type": "__CODECOPY_DYN_ARG",
     "named": false
   },
   {

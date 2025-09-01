@@ -1,15 +1,10 @@
 ================
-Builtin Functions
+Builtin Function __ERROR
 ================
 
 #define error PanicError()
-#define event TestEvent()
-#define function myFunction() view returns ()
-
 #define macro MAIN() = takes (0) returns (0) { 
   __ERROR(PanicError)
-  __EVENT_HASH(TestEvent)
-  __FUNC_SIG(myFunction)
 }
 
 ---
@@ -20,9 +15,51 @@ Builtin Functions
       name: (identifier)
       parameters: (parameter_list)))
   (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (identifier))))))
+
+================
+Builtin Function __EVENT_HASH
+================
+
+#define event TestEvent()
+#define macro MAIN() = takes (0) returns (0) { 
+  __EVENT_HASH(TestEvent)
+}
+
+---
+
+(source_file
+  (declaration
     (event
       name: (identifier)
       parameters: (parameter_list)))
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (identifier))))))
+
+================
+Builtin Function __FUNC_SIG
+================
+
+#define function myFunction() view returns ()
+#define macro MAIN() = takes (0) returns (0) { 
+  __FUNC_SIG(myFunction)
+}
+
+---
+
+(source_file
   (declaration
     (function
       name: (identifier)
@@ -36,21 +73,14 @@ Builtin Functions
       returns_count: (number)
       (macro_body
         (builtin_function
-          args: (identifier))
-        (builtin_function
-          args: (identifier))
-        (builtin_function
           args: (identifier))))))
 
 ================
-All Builtin Functions
+Builtin Function __RIGHT_PAD
 ================
 
 #define fn MY_FUNC() = takes (0) returns (0) {
   __RIGHTPAD(0x42)
-  __codesize(MACRO_NAME)
-  __tablesize(SWITCH_TABLE)
-  __tablestart(SWITCH_TABLE)
 }
 
 ---
@@ -63,10 +93,85 @@ All Builtin Functions
       returns_count: (number)
       (macro_body
         (builtin_function
-          args: (number))
+          args: (number))))))
+
+================
+Builtin Function __CODECOPY_DYN_ARG
+================
+
+#define macro MAIN() = takes (0) returns (0) {
+  __CODECOPY_DYN_ARG(0x00, 0x20)
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
         (builtin_function
-          args: (identifier))
+          args: (number)
+          args: (number))))))
+
+================
+Builtin Function __codesize
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __codesize(MACRO_NAME)
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
         (builtin_function
-          args: (identifier))
+          args: (identifier))))))
+
+================
+Builtin Function __tablesize
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __tablesize(SWITCH_TABLE)
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (identifier))))))
+
+================
+Builtin Function __tablestart
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __tablestart(SWITCH_TABLE)
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
         (builtin_function
           args: (identifier))))))

@@ -2043,6 +2043,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_copy_dyn_arg"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_error_hash"
         },
         {
@@ -2089,6 +2093,48 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_copy_dyn_arg": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "__CODECOPY_DYN_ARG"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "args",
+              "content": {
+                "type": "SYMBOL",
+                "name": "number"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "FIELD",
+              "name": "args",
+              "content": {
+                "type": "SYMBOL",
+                "name": "number"
+              }
+            }
+          ]
         },
         {
           "type": "STRING",

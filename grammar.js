@@ -443,6 +443,7 @@ module.exports = grammar({
     ),
     builtin_function: $ => choice(
       $._codesize,
+      $._copy_dyn_arg,
       $._error_hash,
       $._event_hash,
       $._func_sig,
@@ -455,6 +456,16 @@ module.exports = grammar({
       "__codesize", 
       "(", 
       field("args", $.identifier),
+      ")"
+    ),
+    _copy_dyn_arg: $ => seq(
+      "__CODECOPY_DYN_ARG", 
+      "(", 
+      seq(
+        field("args", $.number),
+        ",",
+        field("args", $.number),
+      ),
       ")"
     ),
     _error_hash: $ => seq(

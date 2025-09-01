@@ -1,0 +1,56 @@
+================
+Function with parameter names and visibility
+================
+
+#define function transfer(address to, uint256 amount) nonpayable returns (bool success)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))))))
+
+================
+Function with memmory, calldata and storage locations
+================
+
+#define function test(bytes memory data, string calldata name, uint256 storage value) view returns (bytes memory result)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))))))

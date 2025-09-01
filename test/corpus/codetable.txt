@@ -1,0 +1,17 @@
+================
+Code Table
+================
+
+#define table CODE_TABLE {
+    0x604260005260206000F3
+}
+
+---
+
+(source_file
+  (declaration
+    (table
+      name: (identifier)
+      body: (macro_body
+        (number)))))
+

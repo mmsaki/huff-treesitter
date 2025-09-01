@@ -1,72 +1,63 @@
-(natspec_line) @comment
-(natspec_block) @comment
-(comment_line) @comment
-(comment_block) @comment
+(natspec_line) @Comment
+(natspec_block) @Comment
+(comment) @Comment
 
-"#define" @keyword.directive.define
-"macro" @keyword
-"fn" @keyword
-"jumptable" @keyword
-"jumptable__packed" @keyword
-"function" @keyword
-"event" @keyword
+"#define" @Define
+"macro" @Macro
+"fn" @Keyword
+"jumptable" @Keyword
+"jumptable__packed" @Keyword
+"function" @Keyword
+"event" @Keyword
 "error" @keyword
-"constant" @keyword
-"table" @keyword
-"test" @keyword
-"takes" @keyword
-"returns" @keyword
+"constant" @Keyword
+"table" @Keyword
+"test" @Keyword
+"takes" @Keyword
+"returns" @Keyword
 
-(declaration_macro name: (identifier) @function)
-(declaration_fn name: (identifier) @function)
-(declaration_jumptable name: (identifier) @function)
-(declaration_jumptable_packed name: (identifier) @function)
-(declaration_table name: (identifier) @function)
-(declaration_test name: (identifier) @function)
-(interface_function name: (identifier) @function)
-(interface_event name: (identifier) @function)
-(error_definition name: (identifier) @function)
+(macro name: (identifier) @Function)
+(fn name: (identifier) @Function)
+(jumptable name: (identifier) @Function)
+(jumptable_packed name: (identifier) @Function)
+(table name: (identifier) @Function)
+(test name: (identifier) @Function)
+(function name: (identifier) @Function)
+(event name: (identifier) @Function)
+(error name: (identifier) @Function)
 
-(interface_primitives) @type.builtin
-"view" @keyword
-"pure" @keyword
-"payable" @keyword
-"nonpayable" @keyword
-"external" @keyword
-"internal" @keyword
-"public" @keyword
-"private" @keyword
-"memory" @keyword
-"storage" @keyword
-"calldata" @keyword
+(type) @Type
+"view" @Keyword
+"pure" @Keyword
+"payable" @Keyword
+"nonpayable" @Keyword
+"memory" @Keyword
+"storage" @Keyword
+"calldata" @Keyword
 
-(parameter name: (identifier) @variable.parameter)
+(parameter name: (identifier) @Identifier)
 
-(opcode) @variable
-"jump" @variable
-"jumpi" @variable
+(opcode) @constant.macro
 
-(template_parameter_call) @variable.parameter
+(macro_call name: (identifier) @Function)
 
-(macro_call name: (identifier) @function)
+(constant name: (identifier) @Identifier)
+(referenced_constant) @Identifier
+(referenced_parameter) @Identifier
 
-(constant_definition name: (identifier) @variable)
-(constant_reference) @variable
+(number) @Number
 
-(number_decimal) @number
-(number_hex) @number
+(type array_size: (number) @Number)
 
-(interface_primitives array_size: (number_decimal) @number)
+(jumpdest_label name: (identifier) @Label)
+(jumpdest name: (identifier) @Label)
+(jumptable_body (jumpdest name: (identifier)) @Label)
 
-(jumpdest_label name: (identifier) @label)
-(jumpdest name: (identifier) @label)
-(jumptable_body (identifier) @label)
+((macro_call name: (identifier) @Function)
+ (#match? @Function "^[A-Z][A-Z0-9_]*$")) ; All caps suggests macro
 
-((macro_call name: (identifier) @function)
- (#match? @function "^[A-Z][A-Z0-9_]*$")) ; All caps suggests macro
-
-(builtin_function) @function.builtin
-(builtin_function args: (identifier) @function)
+(builtin_function) @Function.builtin
+(builtin_function args: (identifier) @Function)
 "__ERROR" @function.builtin
 "__EVENT_HASH" @function.builtin
 "__FUNC_SIG" @function.builtin
@@ -75,25 +66,23 @@
 "__tablesize" @function.builtin
 "__tablestart" @function.builtin
 
-"#include" @keyword.import
-(control_include path: (string_literal) @string)
+"#include" @Include
+(import path: (string_literal) @String)
 
-(modifier_indexed) @keyword
-
-(string_literal) @string
+(string_literal) @String
 
 (decorator) @attribute
-(decorator_item name: (identifier) @attribute)
-(decorator_item args: (string_literal) @string)
-(decorator_item args: (number) @number)
+(decorator_item name: (identifier) @Identifier)
+(decorator_item args: (string_literal) @String)
+(decorator_item args: (number) @Number)
 
-"=" @operator
-":" @punctuation.delimiter
-"," @punctuation.delimiter
-"(" @punctuation.bracket
-")" @punctuation.bracket
-"{" @punctuation.bracket
-"}" @punctuation.bracket
-"[" @punctuation.bracket
-"]" @punctuation.bracket
-"#[" @punctuation.bracket
+"=" @Operator
+":" @Delimiter
+"," @Delimiter
+"(" @Delimiter
+")" @Delimiter
+"{" @Delimiter
+"}" @Delimiter
+"[" @Delimiter
+"]" @Delimiter
+"#[" @Delimiter

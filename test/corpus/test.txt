@@ -1,0 +1,23 @@
+================
+Test Definition
+================
+
+#define test MY_TEST() = {
+    0x00 calldataload
+    callvalue
+    eq ASSERT()
+}
+
+---
+
+(source_file
+  (declaration
+    (test
+      name: (identifier)
+      body: (macro_body
+        (number)
+        (opcode)
+        (opcode)
+        (opcode)
+        (macro_call
+          name: (identifier))))))

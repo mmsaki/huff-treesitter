@@ -1,0 +1,133 @@
+================
+Nested Array Types with Complex Parameters
+================
+
+#define function solution(uint256[2][2] calldata x, uint256[2][2] calldata y) pure returns (uint256[2][2] memory)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type
+            array_size: (number)
+            array_size: (number))
+          (location)
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number)
+            array_size: (number))
+          (location)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type
+            array_size: (number)
+            array_size: (number))
+            (location))))))
+
+================
+Mixed Array Types
+================
+
+#define function mixedArrays(uint8[] small, uint256[100] large, bytes1[32] tiny, bytes[] dynamic) view returns (int256[5] results, bool[] flags)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number))
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number))
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type
+            array_size: (number))
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))))))
+
+================
+Fixed-Size Array Types
+================
+
+#define function processFixedArrays(uint256[10] memory data, bytes32[5] calldata hashes, address[3] storage admins) view returns (bool[2] memory results)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type
+            array_size: (number))
+          (location)
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number))
+          (location)
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number))
+          (location)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type
+            array_size: (number))
+          (location)
+          name: (identifier))))))
+
+================
+Dynamic Arrays
+================
+
+#define function processDynamicArrays(uint256[] amounts, address[] recipients, bytes[] data) view returns (string[] results)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier)))
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))))))

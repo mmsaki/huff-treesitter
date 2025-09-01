@@ -1,5 +1,5 @@
 ================
-Jump Target References
+Jump label References
 ================
 
 #define macro TEST() = takes (0) returns (0) {
@@ -21,35 +21,32 @@ Jump Target References
 
 (source_file
   (declaration
-    (declaration_macro
+    (macro
       name: (identifier)
-      takes_count: (number_decimal)
-      returns_count: (number_decimal)
+      takes_count: (number)
+      returns_count: (number)
       (macro_body
         (jumpdest
           name: (identifier))
+        (opcode)
         (jumpdest
           name: (identifier))
+        (opcode)
         (jumpdest
           name: (identifier))
-        (jumpdest_label
-          name: (identifier))
-        (number
-          (number_hex))
-        (number
-          (number_hex))
         (opcode)
         (jumpdest_label
           name: (identifier))
-        (number
-          (number_hex))
-        (number
-          (number_hex))
+        (number)
+        (number)
         (opcode)
         (jumpdest_label
           name: (identifier))
-        (number
-          (number_hex))
-        (number
-          (number_hex))
+        (number)
+        (number)
+        (opcode)
+        (jumpdest_label
+          name: (identifier))
+        (number)
+        (number)
         (opcode)))))

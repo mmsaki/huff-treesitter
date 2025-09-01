@@ -1,0 +1,26 @@
+================
+Import Declaration
+================
+
+#include "huffmate/utils/Errors.huff"
+
+---
+
+(source_file
+  (import
+    path: (string_literal)))
+
+================
+Import declaration with different sigle vs. double quotes
+================
+
+#include "huffmate/utils/Errors.huff"
+#include 'contracts/interfaces/IERC20.huff'
+
+---
+
+(source_file
+  (import
+    path: (string_literal))
+  (import
+    path: (string_literal)))

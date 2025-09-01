@@ -1,0 +1,72 @@
+================
+Builtin Functions
+================
+
+#define error PanicError()
+#define event TestEvent()
+#define function myFunction() view returns ()
+
+#define macro MAIN() = takes (0) returns (0) { 
+  __ERROR(PanicError)
+  __EVENT_HASH(TestEvent)
+  __FUNC_SIG(myFunction)
+}
+
+---
+
+(source_file
+  (declaration
+    (error
+      name: (identifier)
+      parameters: (parameter_list)))
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list)))
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list)))
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (identifier))
+        (builtin_function
+          args: (identifier))
+        (builtin_function
+          args: (identifier))))))
+
+================
+All Builtin Functions
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __RIGHTPAD(0x42)
+  __codesize(MACRO_NAME)
+  __tablesize(SWITCH_TABLE)
+  __tablestart(SWITCH_TABLE)
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (number))
+        (builtin_function
+          args: (identifier))
+        (builtin_function
+          args: (identifier))
+        (builtin_function
+          args: (identifier))))))

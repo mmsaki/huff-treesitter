@@ -1,0 +1,32 @@
+================
+Parameter usage in macro
+================
+
+#define macro TRANSFER(to_addr) = takes (2) returns (1) {
+    // to_addr should be an address type
+    <to_addr>     // [to, amount]
+    address       // [caller, to, amount]
+    swap1         // [to, caller, amount]
+    push0         // [0, to, caller, amount]
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      parameters: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (comment)
+        (referenced_parameter
+          name: (identifier))
+        (comment)
+        (opcode)
+        (comment)
+        (opcode)
+        (comment)
+        (opcode)
+        (comment)))))

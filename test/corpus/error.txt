@@ -1,0 +1,66 @@
+================
+Error with Parameters
+================
+
+#define error PanicError(uint256)
+#define error Error(string)
+
+---
+
+(source_file
+  (declaration
+    (error
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)))))
+  (declaration
+    (error
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type))))))
+
+================
+Error with Memory Locations
+================
+
+#define error InvalidData(bytes memory data, string calldata reason)
+
+---
+
+(source_file
+  (declaration
+    (error
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier))))))
+
+================
+Errors with Arrays
+================
+
+#define error InvalidArrays(uint256[] memory amounts, string[] memory reasons)
+
+---
+
+(source_file
+  (declaration
+    (error
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier))))))

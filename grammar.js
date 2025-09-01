@@ -7,37 +7,207 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const opcodes = [
+  // Arithmetic Ops
+  "add",
+  "mul",
+  "sub",
+  "div",
+  "sdiv",
+  "mod",
+  "smod",
+  "addmod",
+  "mulmod",
+  "exp",
+  "signextend",
+  // Comparison Ops
+  "lt",
+  "gt",
+  "slt",
+  "sgt",
+  "eq",
+  "iszero",
+  // Bitwise Ops
+  "and",
+  "or",
+  "xor",
+  "not",
+  "byte",
+  "shl",
+  "shr",
+  "sar",
+  // kECCAK oP
+  "sha3",
+  // Environmental Ops
+  "address",
+  "balance",
+  "origin",
+  "caller",
+  "callvalue",
+  "calldataload",
+  "calldatasize",
+  "calldatacopy",
+  "codesize",
+  "codecopy",
+  "gasprice",
+  "extcodesize",
+  "extcodecopy",
+  "returndatasize",
+  "returndatacopy",
+  "extcodehash",
+  // Block Ops
+  "blockhash",
+  "coinbase",
+  "timestamp",
+  "number",
+  "prevrandao",
+  "gaslimit",
+  "chainid",
+  "selfbalance",
+  "basefee",
+  "blobhash",
+  "blobbasefee",
+  // Control Flow Ops
+  "stop",
+  "jump",
+  "jumpi",
+  "pc",
+  "gas",
+  "jumpdest",
+  // Storage Ops
+  "sload",
+  "sstore",
+  "tload",
+  "tstore",
+  // Pop Operation
+  "pop",
+  // Push Operations
+  "push0",
+  "push1",
+  "push2",
+  "push3",
+  "push4",
+  "push5",
+  "push6",
+  "push7",
+  "push8",
+  "push9",
+  "push10",
+  "push11",
+  "push12",
+  "push13",
+  "push14",
+  "push15",
+  "push16",
+  "push17",
+  "push18",
+  "push19",
+  "push20",
+  "push21",
+  "push22",
+  "push23",
+  "push24",
+  "push25",
+  "push26",
+  "push27",
+  "push28",
+  "push29",
+  "push30",
+  "push31",
+  "push32",
+  // Dup operations
+  "dup1",
+  "dup2",
+  "dup3",
+  "dup4",
+  "dup5",
+  "dup6",
+  "dup7",
+  "dup8",
+  "dup9",
+  "dup10",
+  "dup11",
+  "dup12",
+  "dup13",
+  "dup14",
+  "dup15",
+  "dup16",
+  // Swap operations
+  "swap1",
+  "swap2",
+  "swap3",
+  "swap4",
+  "swap5",
+  "swap6",
+  "swap7",
+  "swap8",
+  "swap9",
+  "swap10",
+  "swap11",
+  "swap12",
+  "swap13",
+  "swap14",
+  "swap15",
+  "swap16",
+  // Memory Operations
+  "mload",
+  "mstore",
+  "mstore8",
+  "msize",
+  "mcopy",
+  // Log Operations
+  "log0",
+  "log1",
+  "log2",
+  "log3",
+  "log4",
+  // System Operations
+  "create",
+  "call",
+  "callcode",
+  "return",
+  "delegatecall",
+  "create2",
+  "staticcall",
+  "revert",
+  "selfdestruct",
+]
+
 module.exports = grammar({
   name: "huff",
   rules: {
-    // entry point
-    source_file: $ => repeat($._patterns),
-    _patterns: $ => choice(
-      $.natspec,
+    source_file: $ => repeat($._definition),
+    _definition: $ => choice(
       $.comment,
-      $.number,
       $.declaration,
-      $.interface,
-      $.error,
-      $.control,
-      $.jumpdest,
-      $.opcode,
-      $.macro_call,
-      $.constant,
-      $.jumpdest_label,
-      $.macro_body,
       $.decorator,
-      $.builtin_function,
+      $.import,
+      $.natspec,
+    ),
+    declaration: $ => seq(
+      $._define_keyword,
+      choice(
+        $.constant,
+        $.error,
+        $.event,
+        $.fn,
+        $.function,
+        $.jumptable,
+        $.jumptable_packed,
+        $.macro,
+        $.table,
+        $.test,
+      )
     ),
     natspec: $ => choice(
-      $.natspec_line,
       $.natspec_block,
+      $.natspec_line,
     ),
-    natspec_line: $ => token(seq(
+    natspec_line: _ => token(seq(
       "///",
       /.*/
     )),
-    natspec_block: $ => token(seq(
+    natspec_block: _ => token(seq(
       "/**",
       repeat(choice(
         /[^*]+/,
@@ -45,272 +215,15 @@ module.exports = grammar({
       )),
       "*/"
     )),
-    identifier: $ => /[A-Za-z_]\w*/,
-    comment_line: $ => token(seq("//", /.*/)),
-    comment_block: $ => seq(
+    comment: $ => choice(
+      $._comment_line,
+      $._comment_block,
+    ),
+    _comment_line: _ => token(seq("//", /.*/)),
+    _comment_block: _ => seq(
       "/*",
       repeat(/[^*]|(\*[^/])/),
       "*/",
-    ),
-    comment: $ => choice(
-      $.comment_line,
-      $.comment_block,
-    ),
-    control: $ => choice(
-      $.control_import,
-      $.control_include
-    ),
-    control_import: $ => token("#include"),
-    control_include: $ => seq(
-      "#include",
-      field("path", $.string_literal)
-    ),
-    number: $ => choice(
-      $.number_decimal,
-      $.number_hex
-    ),
-    number_decimal: $ => token(/\d+(\.\d+)?/),
-    number_hex: $ => token(/0[xX][a-fA-F0-9]+/),
-    declaration: $ => choice(
-      $.declaration_macro,
-      $.declaration_fn,
-      $.declaration_jumptable,
-      $.declaration_jumptable_packed,
-      $.declaration_table,
-      $.declaration_test
-    ),
-    declaration_macro: $ => prec.right(seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "macro"),
-      field("name", $.identifier),
-      optional(seq(
-        "(",
-        optional(field("template_parameters", sep1($.identifier, ","))),
-        ")"
-      )),
-      optional(seq(
-        "=",
-        field("takes_keyword", "takes"),
-        "(",
-        field("takes_count", $.number_decimal),
-        ")",
-        optional(seq(
-          field("returns_keyword", "returns"),
-          "(",
-          field("returns_count", $.number_decimal),
-          ")"
-        ))
-      )),
-      optional($.macro_body)
-    )),
-    declaration_fn: $ => prec.right(seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "fn"),
-      field("name", $.identifier),
-      optional(seq(
-        "(",
-        optional(field("param_name", $.identifier)),
-        ")"
-      )),
-      optional(seq(
-        "=",
-        field("takes_keyword", "takes"),
-        "(",
-        field("takes_count", $.number_decimal),
-        ")",
-        optional(seq(
-          field("returns_keyword", "returns"),
-          "(",
-          field("returns_count", $.number_decimal),
-          ")"
-        ))
-      )),
-      optional($.macro_body)
-    )),
-    declaration_jumptable: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "jumptable"),
-      field("name", $.identifier),
-      field("body", $.jumptable_body)
-    ),
-    jumptable_body: $ => seq(
-      "{",
-      repeat($.identifier),
-      "}"
-    ),
-    declaration_jumptable_packed: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "jumptable__packed"),
-      field("name", $.identifier)
-    ),
-    error: $ => $.error_definition,
-    error_definition: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "error"),
-      field("name", $.identifier),
-      optional(field("parameters", $.parameter_list))
-    ),
-    interface: $ => choice(
-      $.interface_function,
-      $.interface_event,
-      $.interface_primitives,
-      $.interface_extensions
-    ),
-    interface_function: $ => prec.right(seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "function"),
-      field("name", $.identifier),
-      field("parameters", $.parameter_list),
-      optional(field("visibility", choice("external", "internal", "public", "private"))),
-      optional(field("mutability", choice("view", "pure", "nonpayable", "payable"))),
-      optional(seq(
-        "returns",
-        field("returns", $.parameter_list)
-      ))
-    )),
-    parameter_list: $ => seq(
-      "(",
-      optional(sep1($.parameter, ",")),
-      ")"
-    ),
-    parameter: $ => seq(
-      $.interface_primitives,
-      repeat(choice(
-        field("location", choice("memory", "storage", "calldata")),
-        field("modifier", alias("indexed", $.modifier_indexed)),
-        field("name", $.identifier)
-      ))
-    ),
-    modifier_indexed: $ => "indexed",
-    interface_event: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "event"),
-      field("name", $.identifier),
-      field("parameters", $.parameter_list)
-    ),
-    interface_primitives: $ => prec.right(1, seq(
-      field("base_type", choice(
-        "string", "bytes", "bool", "address", "int", "uint",
-        /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
-        /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
-        /bytes(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32)/
-      )),
-      repeat(seq(
-        "[",
-        optional(field("array_size", $.number_decimal)),
-        "]"
-      ))
-    )),
-    interface_extensions: $ => field("modifier", token(/(nonpayable|view)/)),
-    predeclaration_template: $ => seq(
-      field("keyword", "template"),
-      "<",
-      field("parameters", sep1($.identifier, ",")),
-      ">"
-    ),
-    opcode: $ => choice(
-      field("opcode", choice(
-        // Individual opcode keywords
-        "lt", "gt", "slt", "sgt", "eq", "iszero", "and", "origin", "or", "xor", "not", "sha3",
-        "address", "balance", "caller", "callvalue", "calldataload", "calldatasize", "calldatacopy",
-        "codesize", "codecopy", "basefee", "blobhash", "blobbasefee", "blockhash", "coinbase",
-        "timestamp", "number", "difficulty", "prevrandao", "gaslimit", "chainid", "selfbalance",
-        "pop", "mload", "mstore8", "mstore", "sload", "sstore", "jumpdest", "jumpi", "jump", "pc",
-        "msize", "stop", "addmod", "add", "mulmod", "mul", "sub", "div", "sdiv", "mod", "smod",
-        "exp", "signextend", "byte", "shl", "shr", "sar", "gasprice", "extcodesize", "extcodecopy",
-        "returndatasize", "returndatacopy", "extcodehash", "gas", "log0", "log1", "log2", "log3",
-        "log4", "tload", "tstore", "mcopy", "create2", "create", "callcode", "call", "return",
-        "delegatecall", "staticcall", "revert", "invalid", "selfdestruct",
-        "push32", "push31", "push30", "push29", "push28", "push27", "push26", "push25", "push24",
-        "push23", "push22", "push21", "push20", "push19", "push18", "push17", "push16", "push15",
-        "push14", "push13", "push12", "push11", "push10", "push9", "push8", "push7", "push6",
-        "push5", "push4", "push3", "push2", "push1", "push0",
-        "swap16", "swap15", "swap14", "swap13", "swap12", "swap11", "swap10", "swap9", "swap8",
-        "swap7", "swap6", "swap5", "swap4", "swap3", "swap2", "swap1",
-        "dup16", "dup15", "dup14", "dup13", "dup12", "dup11", "dup10", "dup9", "dup8", "dup7",
-        "dup6", "dup5", "dup4", "dup3", "dup2", "dup1"
-      )),
-      $.template_parameter_call
-    ),
-    template_parameter_call: $ => seq(
-      field("template_braces", "<"),
-      field("template_name", $.template_token),
-      field("template_braces", ">"),
-    ),
-    template_token: $ => token(/[A-Za-z_]\w*/),
-    macro_call: $ => seq(
-      field("name", $.identifier),
-      optional(seq(
-        "(",
-        optional(field("args", sep1(choice($.number, $.identifier), ","))),
-        ")"
-      ))
-    ),
-    constant: $ => choice(
-      $.constant_definition,
-      $.constant_reference
-    ),
-    constant_definition: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "constant"),
-      field("name", $.identifier),
-      "=",
-      field("value", choice($.number, $.macro_call))
-    ),
-    constant_reference: $ => seq(
-      "[",
-      field("name", /[A-Z_]+/),
-      "]"
-    ),
-    jumpdest: $ => prec(1, seq(
-      field("name", $.identifier),
-      optional($.comment),
-      choice(
-        seq(field("opcode", "jumpi")),
-        seq(field("opcode", "jump"))
-      )
-    )),
-    jumpdest_label: $ => seq(
-      field("name", $.identifier),
-      ":"
-    ),
-    macro_body: $ => seq(
-      "{",
-      repeat($._macro_body_patterns),
-      "}"
-    ),
-    _macro_body_patterns: $ => choice(
-      $.natspec,
-      $.comment,
-      $.number,
-      $.error,
-      $.control,
-      $.jumpdest,
-      $.opcode,
-      $.macro_call,
-      $.constant,
-      $.jumpdest_label,
-      $.macro_body,
-      $.decorator,
-      $.builtin_function,
-    ),
-    declaration_table: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "table"),
-      field("name", $.identifier),
-      field("body", $.macro_body)
-    ),
-    declaration_test: $ => seq(
-      field("define_keyword", "#define"),
-      field("type_keyword", "test"),
-      field("name", $.identifier),
-      optional(seq(
-        "(",
-        optional(field("parameters", sep1($.identifier, ","))),
-        ")"
-      )),
-      "=",
-      field("body", $.macro_body)
     ),
     decorator: $ => seq(
       "#[",
@@ -325,22 +238,260 @@ module.exports = grammar({
         ")"
       ))
     ),
-    string_literal: $ => choice(
+    _define_keyword: _ => field("define_keyword", "#define"),
+    _include_keyword: _ => field("include_keyword", "#include"),
+    import: $ => seq(
+      $._include_keyword,
+      field("path", $.string_literal)
+    ),
+    identifier: _ =>/[a-zA-Z_][a-zA-Z0-9_]*/,
+    string_literal: _ => choice(
       /\"([^\"\\\\]|\\\\.)*\"/,
       /'([^'\\\\]|\\\\.)*'/
     ),
-    builtin_function: $ => seq(
-      field("name", choice(
-        "__ERROR",
-        "__EVENT_HASH",
-        "__FUNC_SIG",
-        "__RIGHTPAD",
-        "__codesize",
-        "__tablesize",
-        "__tablestart"
-      )),
+    number: $ => choice(
+      $._number_decimal,
+      $._number_hex
+    ),
+    _number_decimal: _ => token(/\d(_?\d)*/),
+    _number_hex: _ => token(/0[xX][\da-fA-F](_?[\da-fA-F])*/),
+    macro: $ => prec.right(seq(
+      "macro",
+      field("name", $.identifier),
+      seq(
+        "(",
+        optional(field("parameters", sep1($.identifier, ","))),
+        ")"
+      ),
+      seq(
+        "=",
+        field("takes_keyword", "takes"),
+        "(",
+        field("takes_count", $.number),
+        ")",
+        optional(seq(
+          field("returns_keyword", "returns"),
+          "(",
+          field("returns_count", $.number),
+          ")"
+        ))
+      ),
+      $.macro_body
+    )),
+    fn: $ => prec.right(seq(
+      "fn",
+      field("name", $.identifier),
+      seq(
+        "(",
+        optional(field("parameters", sep1($.identifier, ","))),
+        ")"
+      ),
+      seq(
+        "=",
+        field("takes_keyword", "takes"),
+        "(",
+        field("takes_count", $.number),
+        ")",
+        optional(seq(
+          field("returns_keyword", "returns"),
+          "(",
+          field("returns_count", $.number),
+          ")"
+        ))
+      ),
+      $.macro_body
+    )),
+    jumptable: $ => seq(
+      "jumptable",
+      field("name", $.identifier),
+      $.jumptable_body
+    ),
+    jumptable_packed: $ => seq(
+      "jumptable__packed",
+      field("name", $.identifier),
+      $.jumptable_body
+    ),
+    jumptable_body: $ => seq(
+      "{",
+      repeat($.jumpdest),
+      "}"
+    ),
+    error: $ => seq(
+      "error",
+      field("name", $.identifier),
+      field("parameters", $.parameter_list)
+    ),
+    function: $ => seq(
+      "function",
+      field("name", $.identifier),
+      field("parameters", $.parameter_list),
+      $.visibility,
+      seq(
+        "returns",
+        field("parameters", $.parameter_list)
+      )
+    ),
+    parameter_list: $ => seq(
       "(",
-      field("args", sep1(choice($.identifier, $.number, $.string_literal), ",")),
+      optional(sep1($.parameter, ",")),
+      ")"
+    ),
+    parameter: $ => seq(
+      $.type,
+      optional($.location),
+      optional(field("name", $.identifier))
+    ),
+    event: $ => seq(
+      "event",
+      field("name", $.identifier),
+      field("parameters", $.parameter_list)
+    ),
+    visibility: _ => field("visibility",choice(
+      "pure",
+      "view",
+      "nonpayable",
+      "payable")),
+    location: _ => field("location", choice(
+        "calldata", 
+        "indexed",
+        "memory", 
+        "storage", 
+      )
+    ),
+    type: $ => prec.right(1, seq(
+      choice(
+        "address", 
+        "bool", 
+        "bytes", 
+        "int", 
+        "string", 
+        "uint",
+        /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+        /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
+        /bytes(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32)/
+      ),
+      repeat(seq(
+        "[",
+        optional(field("array_size", $.number)),
+        "]"
+      ))
+    )),
+    opcode: _ => choice(
+      field("opcode", choice(...opcodes)),
+    ),
+    macro_call: $ => seq(
+      field("name", $.identifier),
+      seq(
+        "(",
+        optional(field("args", sep1(choice($.number, $.identifier), ","))),
+        ")"
+      )
+    ),
+    constant: $ => seq(
+      "constant",
+      field("name", $.identifier),
+      "=",
+      field("value", choice($.number, $.builtin_function))
+    ),
+    referenced_parameter: $ => seq(
+      "<",
+      field("name", $.identifier),
+      ">"
+    ),
+    referenced_constant: $ => seq(
+      "[",
+      field("name", $.identifier),
+      "]"
+    ),
+    jumpdest: $ => field("name", $.identifier),
+    jumpdest_label: $ => seq(
+      field("name", $.identifier),
+      ":"
+    ),
+    macro_body: $ => seq(
+      "{",
+      repeat($._macro_body_patterns),
+      "}"
+    ),
+    _macro_body_patterns: $ => choice(
+      $.builtin_function,
+      $.comment,
+      $.jumpdest,
+      $.jumpdest_label,
+      $.macro_call,
+      $.natspec,
+      $.number,
+      $.opcode,
+      $.referenced_constant,
+      $.referenced_parameter,
+    ),
+    table: $ => seq(
+      "table",
+      field("name", $.identifier),
+      field("body", $.macro_body)
+    ),
+    test: $ => seq(
+      "test",
+      field("name", $.identifier),
+      optional(seq(
+        "(",
+        optional(field("parameters", sep1($.identifier, ","))),
+        ")"
+      )),
+      "=",
+      field("body", $.macro_body)
+    ),
+    builtin_function: $ => choice(
+      $._codesize,
+      $._error_hash,
+      $._event_hash,
+      $._func_sig,
+      $._rightpad,
+      $._storage_pointer,
+      $._tablesize,
+      $._tablestart,
+    ),
+    _codesize: $ => seq(
+      "__codesize", 
+      "(", 
+      field("args", $.identifier),
+      ")"
+    ),
+    _error_hash: $ => seq(
+      "__ERROR", 
+      "(", 
+      field("args", choice($.identifier, $.string_literal)),
+      ")"
+    ),
+    _event_hash: $ => seq(
+      "__EVENT_HASH", 
+      "(", 
+      field("args", choice($.identifier, $.string_literal)),
+      ")"
+    ),
+    _func_sig: $ => seq(
+      "__FUNC_SIG", 
+      "(", 
+      field("args", choice($.identifier, $.string_literal)),
+      ")"
+    ),
+    _rightpad: $ => seq(
+      "__RIGHTPAD", 
+      "(", 
+      field("args", $.number),
+      ")"
+    ),
+    _storage_pointer: _ => "FREE_STORAGE_POINTER()",
+    _tablestart: $ => seq(
+      "__tablestart", 
+      "(", 
+      field("args", $.identifier),
+      ")"
+    ),
+    _tablesize: $ => seq(
+      "__tablesize", 
+      "(", 
+      field("args", $.identifier),
       ")"
     ),
   }

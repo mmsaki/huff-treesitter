@@ -1,0 +1,44 @@
+================
+Function with All Visibility Modifiers
+================
+
+#define function pure_func() pure returns (bool)
+#define function public_func() view returns (bool)
+#define function payable_func() payable returns (bool)
+#define function nonpayable_func() nonpayable returns (bool)
+
+---
+
+(source_file
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)))))
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)))))
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)))))
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type))))))

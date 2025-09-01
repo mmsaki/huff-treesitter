@@ -1,0 +1,82 @@
+================
+Opcode in macro body
+================
+
+#define macro GET_ADDRESS() = takes (0) returns (1) {
+    push0 push0 address
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (opcode)
+        (opcode)
+        (opcode)))))
+
+
+================
+Complex scenario with multiple address usages
+================
+
+#define event Transfer(address indexed from, address indexed to, uint256 amount)
+#define function getAddress() nonpayable returns (address owner)
+
+#define macro COMPLEX_ADDRESS_USAGE() = takes (0) returns (2) {
+    address       // Get caller address (opcode)
+    caller        // Another way to get caller (opcode)
+    
+    // Both of the above should be opcodes
+    dup1
+    push0 push0 address  // address opcode in sequence
+}
+
+---
+
+(source_file
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier)))))
+  (declaration
+    (function
+      name: (identifier)
+      parameters: (parameter_list)
+      (visibility)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier)))))
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (opcode)
+        (comment)
+        (opcode)
+        (comment)
+        (comment)
+        (opcode)
+        (opcode)
+        (opcode)
+        (opcode)
+        (comment)))))
+

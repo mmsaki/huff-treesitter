@@ -1,0 +1,23 @@
+================
+Jumptable Definition
+================
+
+#define jumptable SWITCH_TABLE {
+    jump_one jump_two jump_three jump_four
+}
+
+---
+
+(source_file
+  (declaration
+    (jumptable
+      name: (identifier)
+      (jumptable_body
+        (jumpdest
+          name: (identifier))
+        (jumpdest
+          name: (identifier))
+        (jumpdest
+          name: (identifier))
+        (jumpdest
+          name: (identifier))))))

@@ -1,0 +1,16 @@
+================
+Decorators
+================
+
+#[calldata("0x0000000000000000000000000000000000000000000000000000000000000001"), value(0x01)]
+
+---
+
+(source_file
+  (decorator
+    (decorator_item
+      name: (identifier)
+      args: (string_literal))
+    (decorator_item
+      name: (identifier)
+      args: (number))))

@@ -1,0 +1,24 @@
+================
+Simple Macro
+================
+
+#define macro MAIN() = takes (0) returns (0) {
+    success:
+    0x20 0x00 return
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (jumpdest_label
+          name: (identifier))
+        (number)
+        (number)
+        (opcode)))))
+

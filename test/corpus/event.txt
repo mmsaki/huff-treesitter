@@ -1,0 +1,90 @@
+================
+Event definition with plain types
+================
+
+#define event TestEvent1(address, uint256)
+
+---
+
+(source_file
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type))
+        (parameter
+          (type))))))
+
+================
+Event with named types
+================
+
+#define event Transfer(address from, uint256 amount)
+
+---
+
+(source_file
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))))))
+
+================
+Events with indexed keyword
+================
+
+#define event Transfer(address indexed from, address indexed to, bytes data, string message)
+
+---
+
+(source_file
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))))))
+
+================
+Events with Arrays
+================
+
+#define event BatchTransfer(address[] indexed recipients, uint256[10] amounts, bytes32[] data)
+
+---
+
+(source_file
+  (declaration
+    (event
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (type)
+          (location)
+          name: (identifier))
+        (parameter
+          (type
+            array_size: (number))
+          name: (identifier))
+        (parameter
+          (type)
+          name: (identifier))))))

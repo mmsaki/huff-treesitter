@@ -496,13 +496,13 @@ module.exports = grammar({
     _tablestart: $ => seq(
       "__tablestart", 
       "(", 
-      field("args", $.identifier),
+      field("table", $.identifier),
       ")"
     ),
     _tablesize: $ => seq(
       "__tablesize", 
       "(", 
-      field("args", $.identifier),
+      field("table", $.identifier),
       ")"
     ),
   }

@@ -154,7 +154,7 @@ Builtin Function __tablesize
       returns_count: (number)
       (macro_body
         (builtin_function
-          args: (identifier))))))
+          table: (identifier))))))
 
 ================
 Builtin Function __tablestart
@@ -174,4 +174,4 @@ Builtin Function __tablestart
       returns_count: (number)
       (macro_body
         (builtin_function
-          args: (identifier))))))
+          table: (identifier))))))

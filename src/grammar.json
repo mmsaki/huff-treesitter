@@ -2286,7 +2286,7 @@
         },
         {
           "type": "FIELD",
-          "name": "args",
+          "name": "table",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -2311,7 +2311,7 @@
         },
         {
           "type": "FIELD",
-          "name": "args",
+          "name": "table",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"

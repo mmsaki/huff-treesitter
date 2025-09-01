@@ -1,0 +1,12 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+jobs:
+  test:
+      name: Run tests
+      runs-on: ubuntu-latest
+      steps:
+        - name: Tree-sitter parser tests
+        - uses: tree-sitter/parser-test-action@v2

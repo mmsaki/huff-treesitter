@@ -1478,6 +1478,46 @@
             "named": true
           }
         ]
+      },
+      "returns_count": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "returns_keyword": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "returns",
+            "named": false
+          }
+        ]
+      },
+      "takes_count": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "takes_keyword": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "takes",
+            "named": false
+          }
+        ]
       }
     }
   },

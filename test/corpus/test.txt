@@ -21,3 +21,19 @@ Test Definition
         (opcode)
         (macro_call
           name: (identifier))))))
+
+================
+Test Definition With Takes and Returns
+================
+
+#define test MY_TEST() = takes (0) returns (0) {}
+
+---
+
+(source_file
+  (declaration
+    (test
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      body: (macro_body))))

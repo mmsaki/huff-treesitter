@@ -1626,6 +1626,10 @@
     "named": false
   },
   {
+    "type": "__BYTES",
+    "named": false
+  },
+  {
     "type": "__CODECOPY_DYN_ARG",
     "named": false
   },
@@ -1642,7 +1646,15 @@
     "named": false
   },
   {
+    "type": "__LEFTPAD",
+    "named": false
+  },
+  {
     "type": "__RIGHTPAD",
+    "named": false
+  },
+  {
+    "type": "__VERBATIM",
     "named": false
   },
   {

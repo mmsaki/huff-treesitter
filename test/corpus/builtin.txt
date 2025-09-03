@@ -1,4 +1,45 @@
 ================
+Builtin Function __BYTES
+================
+
+#define macro MAIN() = takes (0) returns (0) { 
+  __BYTES("Hello World!")
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (string_literal))))))
+
+================
+Builtin Function __CODECOPY_DYN_ARG
+================
+
+#define macro MAIN() = takes (0) returns (0) {
+  __CODECOPY_DYN_ARG(0x00, 0x20)
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (number)
+          args: (number))))))
+
+================
 Builtin Function __ERROR
 ================
 
@@ -76,7 +117,27 @@ Builtin Function __FUNC_SIG
           args: (identifier))))))
 
 ================
-Builtin Function __RIGHT_PAD
+Builtin Function __LEFTPAD
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __LEFTPAD(0x42)
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (number))))))
+
+================
+Builtin Function __RIGHTPAD
 ================
 
 #define fn MY_FUNC() = takes (0) returns (0) {
@@ -93,27 +154,6 @@ Builtin Function __RIGHT_PAD
       returns_count: (number)
       (macro_body
         (builtin_function
-          args: (number))))))
-
-================
-Builtin Function __CODECOPY_DYN_ARG
-================
-
-#define macro MAIN() = takes (0) returns (0) {
-  __CODECOPY_DYN_ARG(0x00, 0x20)
-}
-
----
-
-(source_file
-  (declaration
-    (macro
-      name: (identifier)
-      takes_count: (number)
-      returns_count: (number)
-      (macro_body
-        (builtin_function
-          args: (number)
           args: (number))))))
 
 ================
@@ -175,3 +215,23 @@ Builtin Function __tablestart
       (macro_body
         (builtin_function
           table: (identifier))))))
+
+================
+Builtin Function __VERBATIM
+================
+
+#define macro MAIN() = takes (0) returns (0) { 
+  __VERBATIM(0x0420)
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (number))))))

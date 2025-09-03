@@ -2000,6 +2000,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "_bytes"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_codesize"
         },
         {
@@ -2020,6 +2024,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_leftpad"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_rightpad"
         },
         {
@@ -2033,6 +2041,35 @@
         {
           "type": "SYMBOL",
           "name": "_tablestart"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_verbatim"
+        }
+      ]
+    },
+    "_bytes": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "__BYTES"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_literal"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -2205,6 +2242,31 @@
         }
       ]
     },
+    "_leftpad": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "__LEFTPAD"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
+            "type": "SYMBOL",
+            "name": "number"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "_rightpad": {
       "type": "SEQ",
       "members": [
@@ -2276,6 +2338,31 @@
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_verbatim": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "__VERBATIM"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
+            "type": "SYMBOL",
+            "name": "number"
           }
         },
         {

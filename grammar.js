@@ -431,15 +431,24 @@ module.exports = grammar({
       field("body", $.macro_body)
     ),
     builtin_function: $ => choice(
+      $._bytes,
       $._codesize,
       $._copy_dyn_arg,
       $._error_hash,
       $._event_hash,
       $._func_sig,
+      $._leftpad,
       $._rightpad,
       $._storage_pointer,
       $._tablesize,
       $._tablestart,
+      $._verbatim,
+    ),
+    _bytes: $ => seq(
+      "__BYTES", 
+      "(", 
+      field("args", $.string_literal),
+      ")"
     ),
     _codesize: $ => seq(
       "__codesize", 
@@ -475,6 +484,12 @@ module.exports = grammar({
       field("args", choice($.identifier, $.string_literal)),
       ")"
     ),
+    _leftpad: $ => seq(
+      "__LEFTPAD", 
+      "(", 
+      field("args", $.number),
+      ")"
+    ),
     _rightpad: $ => seq(
       "__RIGHTPAD", 
       "(", 
@@ -492,6 +507,12 @@ module.exports = grammar({
       "__tablesize", 
       "(", 
       field("table", $.identifier),
+      ")"
+    ),
+    _verbatim: $ => seq(
+      "__VERBATIM", 
+      "(", 
+      field("args", $.number),
       ")"
     ),
   }

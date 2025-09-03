@@ -427,6 +427,7 @@ module.exports = grammar({
         ")"
       )),
       "=",
+      optional($._takes_returns),
       field("body", $.macro_body)
     ),
     builtin_function: $ => choice(

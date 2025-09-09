@@ -9,10 +9,10 @@
       },
       "devDependencies": {
         "prebuildify": "^6.0.1",
-        "tree-sitter-cli": "^0.25.8",
+        "tree-sitter-cli": "0.25.9",
       },
       "peerDependencies": {
-        "tree-sitter": "^0.22.4",
+        "tree-sitter": "0.25.9",
       },
       "optionalPeers": [
         "tree-sitter",
@@ -68,7 +68,7 @@
 
     "tar-stream": ["tar-stream@2.2.0", "", { "dependencies": { "bl": "^4.0.3", "end-of-stream": "^1.4.1", "fs-constants": "^1.0.0", "inherits": "^2.0.3", "readable-stream": "^3.1.1" } }, "sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ=="],
 
-    "tree-sitter-cli": ["tree-sitter-cli@0.25.8", "", { "bin": { "tree-sitter": "cli.js" } }, "sha512-avR7qo4qT+dNv2jj4M2e79vfc2etbWK6/umWcRsnEX1LTRhUL6p5AgGe6dP7+cV/RYFFk/VBz1rJuVCk+w5H2A=="],
+    "tree-sitter-cli": ["tree-sitter-cli@0.25.9", "", { "bin": { "tree-sitter": "cli.js" } }, "sha512-xcS2EJlNdwG529/JcYl5jV0ew/wY+HXvyNe8nkqhDCwQqxCH7odc9oLKxIWePQqmIKgieZ0YaGyieYKQI3MTKQ=="],
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
 

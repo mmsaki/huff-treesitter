@@ -137,6 +137,27 @@ Builtin Function __LEFTPAD
           args: (number))))))
 
 ================
+Builtin Function __LEFTPAD w/ macro
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __LEFTPAD(__FUNC_SIG("f()"))
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (builtin_function
+            args: (string_literal)))))))
+
+================
 Builtin Function __RIGHTPAD
 ================
 
@@ -155,6 +176,27 @@ Builtin Function __RIGHTPAD
       (macro_body
         (builtin_function
           args: (number))))))
+
+================
+Builtin Function __RIGHTPAD w/ macro
+================
+
+#define fn MY_FUNC() = takes (0) returns (0) {
+  __RIGHTPAD(__FUNC_SIG("f()"))
+}
+
+---
+
+(source_file
+  (declaration
+    (fn
+      name: (identifier)
+      takes_count: (number)
+      returns_count: (number)
+      (macro_body
+        (builtin_function
+          args: (builtin_function
+            args: (string_literal)))))))
 
 ================
 Builtin Function __codesize

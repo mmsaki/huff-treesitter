@@ -487,13 +487,23 @@ module.exports = grammar({
     _leftpad: $ => seq(
       "__LEFTPAD", 
       "(", 
-      field("args", $.number),
+      field("args", 
+        choice(
+          $.number, 
+          $.builtin_function,
+        )
+      ),
       ")"
     ),
     _rightpad: $ => seq(
       "__RIGHTPAD", 
       "(", 
-      field("args", $.number),
+      field("args", 
+        choice(
+          $.number, 
+          $.builtin_function,
+        )
+      ),
       ")"
     ),
     _storage_pointer: _ => "FREE_STORAGE_POINTER()",

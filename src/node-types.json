@@ -8,6 +8,10 @@
         "required": false,
         "types": [
           {
+            "type": "builtin_function",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },

@@ -244,7 +244,7 @@ module.exports = grammar({
       $._include_keyword,
       field("path", $.string_literal)
     ),
-    identifier: _ =>/[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
     string_literal: _ => choice(
       /\"([^\"\\\\]|\\\\.)*\"/,
       /'([^'\\\\]|\\\\.)*'/
@@ -334,25 +334,25 @@ module.exports = grammar({
       field("name", $.identifier),
       field("parameters", $.parameter_list)
     ),
-    visibility: _ => field("visibility",choice(
+    visibility: _ => field("visibility", choice(
       "pure",
       "view",
       "nonpayable",
       "payable")),
     location: _ => field("location", choice(
-        "calldata", 
-        "indexed",
-        "memory", 
-        "storage", 
-      )
+      "calldata",
+      "indexed",
+      "memory",
+      "storage",
+    )
     ),
     type: $ => prec.right(1, seq(
       choice(
-        "address", 
-        "bool", 
-        "bytes", 
-        "int", 
-        "string", 
+        "address",
+        "bool",
+        "bytes",
+        "int",
+        "string",
         "uint",
         /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
         /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
@@ -445,20 +445,20 @@ module.exports = grammar({
       $._verbatim,
     ),
     _bytes: $ => seq(
-      "__BYTES", 
-      "(", 
+      "__BYTES",
+      "(",
       field("args", $.string_literal),
       ")"
     ),
     _codesize: $ => seq(
-      "__codesize", 
-      "(", 
+      "__codesize",
+      "(",
       field("args", $.identifier),
       ")"
     ),
     _copy_dyn_arg: $ => seq(
-      "__CODECOPY_DYN_ARG", 
-      "(", 
+      "__CODECOPY_DYN_ARG",
+      "(",
       seq(
         field("args", $.number),
         ",",
@@ -467,61 +467,65 @@ module.exports = grammar({
       ")"
     ),
     _error_hash: $ => seq(
-      "__ERROR", 
-      "(", 
+      "__ERROR",
+      "(",
       field("args", choice($.identifier, $.string_literal)),
       ")"
     ),
     _event_hash: $ => seq(
-      "__EVENT_HASH", 
-      "(", 
+      "__EVENT_HASH",
+      "(",
       field("args", choice($.identifier, $.string_literal)),
       ")"
     ),
     _func_sig: $ => seq(
-      "__FUNC_SIG", 
-      "(", 
+      "__FUNC_SIG",
+      "(",
       field("args", choice($.identifier, $.string_literal)),
       ")"
     ),
     _leftpad: $ => seq(
-      "__LEFTPAD", 
-      "(", 
-      field("args", 
+      "__LEFTPAD",
+      "(",
+      field("args",
         choice(
-          $.number, 
+          $.number,
           $.builtin_function,
+          $.referenced_constant,
+          $.referenced_parameter,
         )
       ),
       ")"
     ),
     _rightpad: $ => seq(
-      "__RIGHTPAD", 
-      "(", 
-      field("args", 
+      "__RIGHTPAD",
+      "(",
+      field("args",
         choice(
-          $.number, 
+          $.number,
           $.builtin_function,
+          $.referenced_constant,
+          $.referenced_parameter,
         )
       ),
       ")"
     ),
     _storage_pointer: _ => "FREE_STORAGE_POINTER()",
     _tablestart: $ => seq(
-      "__tablestart", 
-      "(", 
+      "__tablestart",
+      "(",
       field("table", $.identifier),
       ")"
     ),
     _tablesize: $ => seq(
-      "__tablesize", 
-      "(", 
+      "__tablesize",
+      "(",
       field("table", $.identifier),
       ")"
     ),
     _verbatim: $ => seq(
-      "__VERBATIM", 
-      "(", 
+      "__VERBATIM",
+      "(",
       field("args", $.number),
       ")"
     ),

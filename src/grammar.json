@@ -2266,6 +2266,14 @@
               {
                 "type": "SYMBOL",
                 "name": "builtin_function"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "referenced_constant"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "referenced_parameter"
               }
             ]
           }
@@ -2300,6 +2308,14 @@
               {
                 "type": "SYMBOL",
                 "name": "builtin_function"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "referenced_constant"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "referenced_parameter"
               }
             ]
           }

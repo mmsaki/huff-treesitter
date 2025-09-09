@@ -20,6 +20,14 @@
             "named": true
           },
           {
+            "type": "referenced_constant",
+            "named": true
+          },
+          {
+            "type": "referenced_parameter",
+            "named": true
+          },
+          {
             "type": "string_literal",
             "named": true
           }

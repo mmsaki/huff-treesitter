@@ -43,6 +43,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "storage_pointer",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1626,10 +1636,6 @@
     "named": false
   },
   {
-    "type": "FREE_STORAGE_POINTER()",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
@@ -2276,6 +2282,10 @@
   {
     "type": "storage",
     "named": false
+  },
+  {
+    "type": "storage_pointer",
+    "named": true
   },
   {
     "type": "string",

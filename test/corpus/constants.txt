@@ -20,7 +20,8 @@ Constants
   (declaration
     (constant
       name: (identifier)
-      value: (builtin_function))))
+      value: (builtin_function
+        (storage_pointer)))))
 
 ================
 Constant Reference
@@ -39,7 +40,8 @@ Constant Reference
  (declaration
   (constant
    (identifier)
-   (builtin_function)))
+   (builtin_function
+    (storage_pointer))))
  (declaration
   (macro
    (identifier)

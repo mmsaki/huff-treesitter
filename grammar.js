@@ -439,10 +439,10 @@ module.exports = grammar({
       $._func_sig,
       $._leftpad,
       $._rightpad,
-      $._storage_pointer,
       $._tablesize,
       $._tablestart,
       $._verbatim,
+      $.storage_pointer,
     ),
     _bytes: $ => seq(
       "__BYTES",
@@ -510,7 +510,7 @@ module.exports = grammar({
       ),
       ")"
     ),
-    _storage_pointer: _ => "FREE_STORAGE_POINTER()",
+    storage_pointer: _ => "FREE_STORAGE_POINTER()",
     _tablestart: $ => seq(
       "__tablestart",
       "(",

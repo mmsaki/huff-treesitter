@@ -2032,10 +2032,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_storage_pointer"
-        },
-        {
-          "type": "SYMBOL",
           "name": "_tablesize"
         },
         {
@@ -2045,6 +2041,10 @@
         {
           "type": "SYMBOL",
           "name": "_verbatim"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "storage_pointer"
         }
       ]
     },
@@ -2326,7 +2326,7 @@
         }
       ]
     },
-    "_storage_pointer": {
+    "storage_pointer": {
       "type": "STRING",
       "value": "FREE_STORAGE_POINTER()"
     },

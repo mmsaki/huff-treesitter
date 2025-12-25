@@ -20,6 +20,7 @@ const opcodes = [
   "mulmod",
   "exp",
   "signextend",
+  "clz",
   // Comparison Ops
   "lt",
   "gt",

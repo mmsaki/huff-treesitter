@@ -800,6 +800,10 @@
             "named": false
           },
           {
+            "type": "clz",
+            "named": false
+          },
+          {
             "type": "codecopy",
             "named": false
           },
@@ -1644,6 +1648,10 @@
     "named": false
   },
   {
+    "type": "__ASSERT_PC",
+    "named": false
+  },
+  {
     "type": "__BYTES",
     "named": false
   },
@@ -1769,6 +1777,10 @@
   },
   {
     "type": "chainid",
+    "named": false
+  },
+  {
+    "type": "clz",
     "named": false
   },
   {

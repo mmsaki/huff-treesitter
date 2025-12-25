@@ -443,6 +443,7 @@ module.exports = grammar({
       $._tablesize,
       $._tablestart,
       $._verbatim,
+      $._assert_pc,
       $.storage_pointer,
     ),
     _bytes: $ => seq(
@@ -528,6 +529,18 @@ module.exports = grammar({
       "__VERBATIM",
       "(",
       field("args", $.number),
+      ")"
+    ),
+    _assert_pc: $ => seq(
+      "__ASSERT_PC",
+      "(",
+      field("args", $.number),
+      ")"
+    ),
+    _embeded_table: $ => seq(
+      "__EMBED_TABLE",
+      "(",
+      field("args", $.identifier),
       ")"
     ),
   }

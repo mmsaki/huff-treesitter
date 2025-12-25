@@ -1,11 +1,17 @@
 [
+  "__ASSERT_PC"
+  "__BYTES"
+  "__CODECOPY_DYN_ARG"
+  "__EMBED_TABLE"
   "__ERROR"
-  "__EVENT_HASH" 
+  "__EVENT_HASH"
   "__FUNC_SIG"
+  "__LEFTPAD"
   "__RIGHTPAD"
   "__codesize"
   "__tablesize"
   "__tablestart"
+  "__VERBATIM"
 ] @local.definition.builtin
 
 (macro 

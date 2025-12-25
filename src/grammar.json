@@ -2052,6 +2052,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_embed_table"
+        },
+        {
+          "type": "SYMBOL",
           "name": "storage_pointer"
         }
       ]
@@ -2438,7 +2442,7 @@
         }
       ]
     },
-    "_embeded_table": {
+    "_embed_table": {
       "type": "SEQ",
       "members": [
         {

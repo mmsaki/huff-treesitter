@@ -1660,6 +1660,10 @@
     "named": false
   },
   {
+    "type": "__EMBED_TABLE",
+    "named": false
+  },
+  {
     "type": "__ERROR",
     "named": false
   },

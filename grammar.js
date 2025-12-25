@@ -444,6 +444,7 @@ module.exports = grammar({
       $._tablestart,
       $._verbatim,
       $._assert_pc,
+      $._embed_table,
       $.storage_pointer,
     ),
     _bytes: $ => seq(
@@ -537,7 +538,7 @@ module.exports = grammar({
       field("args", $.number),
       ")"
     ),
-    _embeded_table: $ => seq(
+    _embed_table: $ => seq(
       "__EMBED_TABLE",
       "(",
       field("args", $.identifier),

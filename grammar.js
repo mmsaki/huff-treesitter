@@ -226,6 +226,9 @@ const PREC = {
 module.exports = grammar({
   name: "huff",
   word: $ => $.identifier,
+  conflicts: $ => [
+    [$.if_statement],
+  ],
   extras: $ => [
     /\s/,
     $.comment,
@@ -466,11 +469,14 @@ module.exports = grammar({
       field("name", $.identifier),
       "]"
     ),
-    jumpdest: $ => field("name", $.identifier),
+    jumpdest: $ => field("name", choice($.identifier, $._keyword_label)),
     jumpdest_label: $ => seq(
-      field("name", $.identifier),
+      field("name", choice($.identifier, $._keyword_label)),
       ":"
     ),
+    // huff-neo allows `if`, `else` and `for` as label names when they are not
+    // followed by `(` or `{`.
+    _keyword_label: $ => alias(prec(-1, choice("if", "else", "for")), $.identifier),
     macro_body: $ => seq(
       "{",
       repeat($._macro_body_patterns),

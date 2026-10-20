@@ -2386,8 +2386,17 @@
       "type": "FIELD",
       "name": "name",
       "content": {
-        "type": "SYMBOL",
-        "name": "identifier"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_label"
+          }
+        ]
       }
     },
     "jumpdest_label": {
@@ -2397,8 +2406,17 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_keyword_label"
+              }
+            ]
           }
         },
         {
@@ -2406,6 +2424,32 @@
           "value": ":"
         }
       ]
+    },
+    "_keyword_label": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "if"
+            },
+            {
+              "type": "STRING",
+              "value": "else"
+            },
+            {
+              "type": "STRING",
+              "value": "for"
+            }
+          ]
+        }
+      },
+      "named": true,
+      "value": "identifier"
     },
     "macro_body": {
       "type": "SEQ",
@@ -3422,7 +3466,11 @@
       "name": "natspec"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "if_statement"
+    ]
+  ],
   "precedences": [],
   "externals": [],
   "inline": [],

@@ -236,3 +236,63 @@ Code Table With Parens
       (macro_body
         (builtin_function
           (number))))))
+
+================
+Keyword Labels
+================
+
+#define macro M() = takes(0) returns(0) {
+  if ([A]) { 0x01 } else { 0x02 }
+  if ([A]) { 0x01 }
+  [C] else jumpi
+  for jump
+  if:
+    0xAA
+  else:
+  for:
+  for(i in 0..2) { <i> }
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      (identifier)
+      (number)
+      (number)
+      (macro_body
+        (if_statement
+          (referenced_constant
+            (identifier))
+          (block
+            (number))
+          (block
+            (number)))
+        (if_statement
+          (referenced_constant
+            (identifier))
+          (block
+            (number)))
+        (referenced_constant
+          (identifier))
+        (jumpdest
+          (identifier))
+        (opcode)
+        (jumpdest
+          (identifier))
+        (opcode)
+        (jumpdest_label
+          (identifier))
+        (number)
+        (jumpdest_label
+          (identifier))
+        (jumpdest_label
+          (identifier))
+        (for_statement
+          (identifier)
+          (number)
+          (number)
+          (block
+            (referenced_parameter
+              (identifier))))))))

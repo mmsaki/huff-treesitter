@@ -11,3 +11,4 @@
 (parameter_list "(" @fold.start ")" @fold.end) @fold
 (table (macro_body) @fold)
 (test (macro_body) @fold)
+(block "{" @fold.start "}" @fold.end) @fold

@@ -1,0 +1,238 @@
+================
+If Else If Else
+================
+
+#define macro MAIN() = takes(0) returns(0) {
+  if ([VALUE] == 0x01) { 0x11 } else if (![DEBUG]) { 0x22 } else { 0x33 }
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      (identifier)
+      (number)
+      (number)
+      (macro_body
+        (if_statement
+          (binary_expression
+            (referenced_constant
+              (identifier))
+            (number))
+          (block
+            (number))
+          (if_statement
+            (unary_expression
+              (referenced_constant
+                (identifier)))
+            (block
+              (number))
+            (block
+              (number))))))))
+
+================
+For Loop With Step
+================
+
+#define macro MAIN() = takes(0) returns(0) {
+  for(i in 0..[END] step 0x02) { <i> dupn (<i> + 17) }
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      (identifier)
+      (number)
+      (number)
+      (macro_body
+        (for_statement
+          (identifier)
+          (number)
+          (referenced_constant
+            (identifier))
+          (number)
+          (block
+            (referenced_parameter
+              (identifier))
+            (opcode)
+            (parenthesized_expression
+              (binary_expression
+                (referenced_parameter
+                  (identifier))
+                (number)))))))))
+
+================
+Constant Expressions
+================
+
+#define constant A = ([B] + 0x20) * 2 - -[C]
+#define constant N = __NOOP
+#define constant T = true
+
+---
+
+(source_file
+  (declaration
+    (constant
+      (identifier)
+      (binary_expression
+        (binary_expression
+          (parenthesized_expression
+            (binary_expression
+              (referenced_constant
+                (identifier))
+              (number)))
+          (number))
+        (unary_expression
+          (referenced_constant
+            (identifier))))))
+  (declaration
+    (constant
+      (identifier)
+      (noop)))
+  (declaration
+    (constant
+      (identifier)
+      (boolean))))
+
+================
+Macro Arguments
+================
+
+#define macro MAIN() = takes(0) returns(0) {
+  FOO(<ptr>, [SLOT], __FUNC_SIG(transfer), BAR(0x01), add, __NOOP)
+  <fn>(<x>, 0x10)
+  push2 [SIZE]
+}
+
+---
+
+(source_file
+  (declaration
+    (macro
+      (identifier)
+      (number)
+      (number)
+      (macro_body
+        (macro_call
+          (identifier)
+          (referenced_parameter
+            (identifier))
+          (referenced_constant
+            (identifier))
+          (builtin_function
+            (identifier))
+          (macro_call
+            (identifier)
+            (number))
+          (opcode)
+          (noop))
+        (macro_invocation
+          (referenced_parameter
+            (identifier))
+          (referenced_parameter
+            (identifier))
+          (number))
+        (opcode)
+        (referenced_constant
+          (identifier))))))
+
+================
+Test Decorators
+================
+
+#[calldata(__FUNC_SIG(transfer), caller, 100),]
+#[store([OWNER_SLOT], 0xbeef, at = this), expect_gas(min = 1, max = 2), expect_revert]
+#define test T() = { stop }
+
+---
+
+(source_file
+  (decorator
+    (decorator_item
+      (identifier)
+      (builtin_function
+        (identifier))
+      (identifier)
+      (number)))
+  (decorator
+    (decorator_item
+      (identifier)
+      (referenced_constant
+        (identifier))
+      (number)
+      (named_argument
+        (identifier)
+        (identifier)))
+    (decorator_item
+      (identifier)
+      (named_argument
+        (identifier)
+        (number))
+      (named_argument
+        (identifier)
+        (number)))
+    (decorator_item
+      (identifier)))
+  (declaration
+    (test
+      (identifier)
+      (macro_body
+        (opcode)))))
+
+================
+Comments Everywhere
+================
+
+#define jumptable TABLE { // labels
+  a /* first */ b
+}
+#define function f(uint256 /* amount */) view returns (uint256) /** doc **/
+
+---
+
+(source_file
+  (declaration
+    (jumptable
+      (identifier)
+      (jumptable_body
+        (comment)
+        (jumpdest
+          (identifier))
+        (comment)
+        (jumpdest
+          (identifier)))))
+  (declaration
+    (function
+      (identifier)
+      (parameter_list
+        (parameter
+          (type))
+        (comment))
+      (visibility)
+      (parameter_list
+        (parameter
+          (type)))))
+  (natspec
+    (natspec_block)))
+
+================
+Code Table With Parens
+================
+
+#define table CODE_TABLE() {
+  __LEFTPAD(0x0123)
+}
+
+---
+
+(source_file
+  (declaration
+    (table
+      (identifier)
+      (macro_body
+        (builtin_function
+          (number))))))

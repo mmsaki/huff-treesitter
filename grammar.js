@@ -21,6 +21,7 @@ const opcodes = [
   "exp",
   "signextend",
   "clz",
+  "keccak256",
   // Comparison Ops
   "lt",
   "gt",
@@ -61,6 +62,7 @@ const opcodes = [
   "coinbase",
   "timestamp",
   "number",
+  "difficulty",
   "prevrandao",
   "gaslimit",
   "chainid",
@@ -68,6 +70,7 @@ const opcodes = [
   "basefee",
   "blobhash",
   "blobbasefee",
+  "slotnum",
   // Control Flow Ops
   "stop",
   "jump",
@@ -150,6 +153,10 @@ const opcodes = [
   "swap14",
   "swap15",
   "swap16",
+  // Deep stack operations (EIP-8024)
+  "dupn",
+  "swapn",
+  "exchange",
   // Memory Operations
   "mload",
   "mstore",
@@ -172,18 +179,64 @@ const opcodes = [
   "staticcall",
   "revert",
   "selfdestruct",
+  "invalid",
 ]
+
+const builtins = [
+  "__ASSERT_PC",
+  "__BYTES",
+  "__CODECOPY_DYN_ARG",
+  "__ERROR",
+  "__EVENT_HASH",
+  "__FUNC_SIG",
+  "__LEFTPAD",
+  "__RIGHTPAD",
+  "__VERBATIM",
+  "__codesize",
+]
+
+const table_builtins = [
+  "__EMBED_TABLE",
+  "__tablesize",
+  "__tablestart",
+]
+
+const sizes = Array.from({ length: 32 }, (_, i) => i + 1)
+const types = [
+  "address",
+  "bool",
+  "bytes",
+  "function",
+  "int",
+  "string",
+  "uint",
+  ...sizes.map(n => `uint${n * 8}`),
+  ...sizes.map(n => `int${n * 8}`),
+  ...sizes.map(n => `bytes${n}`),
+]
+
+const PREC = {
+  comparison: 1,
+  additive: 2,
+  multiplicative: 3,
+  unary: 4,
+  call: 5,
+}
 
 module.exports = grammar({
   name: "huff",
+  word: $ => $.identifier,
+  extras: $ => [
+    /\s/,
+    $.comment,
+    $.natspec,
+  ],
   rules: {
     source_file: $ => repeat($._definition),
     _definition: $ => choice(
-      $.comment,
       $.declaration,
       $.decorator,
       $.import,
-      $.natspec,
     ),
     declaration: $ => seq(
       $._define_keyword,
@@ -204,40 +257,40 @@ module.exports = grammar({
       $.natspec_block,
       $.natspec_line,
     ),
-    natspec_line: _ => token(seq(
-      "///",
-      /.*/
+    natspec_line: _ => token(prec(1, seq("///", /[^\n]*/))),
+    natspec_block: _ => token(prec(1, seq("/**", /[^*]*\*+([^/*][^*]*\*+)*/, "/"))),
+    comment: _ => token(choice(
+      seq("//", /[^\n]*/),
+      seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"),
     )),
-    natspec_block: _ => token(seq(
-      "/**",
-      repeat(choice(
-        /[^*]+/,
-        /\*[^/]/
-      )),
-      "*/"
-    )),
-    comment: $ => choice(
-      $._comment_line,
-      $._comment_block,
-    ),
-    _comment_line: _ => token(seq("//", /.*/)),
-    _comment_block: _ => seq(
-      "/*",
-      repeat(/[^*]|(\*[^/])/),
-      "*/",
-    ),
+    // `#[a(1), b(2)]`, stacked blocks, trailing commas and the legacy
+    // comma-less `#[a(1) b(2)]` form are all accepted by huff-neo.
     decorator: $ => seq(
       "#[",
-      sep1($.decorator_item, ","),
+      repeat(seq($.decorator_item, optional(","))),
       "]"
     ),
     decorator_item: $ => seq(
       field("name", $.identifier),
       optional(seq(
         "(",
-        field("args", sep1(choice($.string_literal, $.number, $.identifier), ",")),
+        optional(seq(
+          sep1(field("args", $._decorator_arg), ","),
+          optional(","),
+        )),
         ")"
       ))
+    ),
+    _decorator_arg: $ => choice(
+      $._expression,
+      $.identifier,
+      $.named_argument,
+      $.string_literal,
+    ),
+    named_argument: $ => seq(
+      field("name", $.identifier),
+      "=",
+      field("value", choice($._expression, $.identifier, $.string_literal)),
     ),
     _define_keyword: _ => field("define_keyword", "#define"),
     _include_keyword: _ => field("include_keyword", "#include"),
@@ -247,8 +300,8 @@ module.exports = grammar({
     ),
     identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
     string_literal: _ => choice(
-      /\"([^\"\\\\]|\\\\.)*\"/,
-      /'([^'\\\\]|\\\\.)*'/
+      /"([^"\\]|\\.)*"/,
+      /'([^'\\]|\\.)*'/
     ),
     number: $ => choice(
       $._number_decimal,
@@ -256,50 +309,61 @@ module.exports = grammar({
     ),
     _number_decimal: _ => token(/\d(_?\d)*/),
     _number_hex: _ => token(/0[xX][\da-fA-F](_?[\da-fA-F])*/),
-    macro: $ => prec.right(seq(
+    boolean: _ => choice("true", "false"),
+    _macro_parameters: $ => seq(
+      "(",
+      optional(seq(
+        field("parameters", sep1($.identifier, ",")),
+        optional(","),
+      )),
+      ")"
+    ),
+    macro: $ => seq(
       "macro",
       field("name", $.identifier),
-      seq(
-        "(",
-        optional(field("parameters", sep1($.identifier, ","))),
-        ")"
-      ),
+      $._macro_parameters,
       "=",
       optional($._takes_returns),
       $.macro_body
-    )),
-    _takes_returns: $ => seq(
+    ),
+    _takes_returns: $ => choice(
+      seq($._takes, optional($._returns)),
+      $._returns,
+    ),
+    _takes: $ => seq(
       field("takes_keyword", "takes"),
       "(",
       field("takes_count", $.number),
       ")",
+    ),
+    _returns: $ => seq(
       field("returns_keyword", "returns"),
       "(",
       field("returns_count", $.number),
       ")"
     ),
-    fn: $ => prec.right(seq(
+    fn: $ => seq(
       "fn",
       field("name", $.identifier),
-      seq(
-        "(",
-        optional(field("parameters", sep1($.identifier, ","))),
-        ")"
-      ),
+      $._macro_parameters,
       "=",
       optional($._takes_returns),
       $.macro_body
-    )),
+    ),
     jumptable: $ => seq(
       "jumptable",
       field("name", $.identifier),
+      optional($._table_suffix),
       $.jumptable_body
     ),
     jumptable_packed: $ => seq(
       "jumptable__packed",
       field("name", $.identifier),
+      optional($._table_suffix),
       $.jumptable_body
     ),
+    // `()` and `=` after a table name are optional.
+    _table_suffix: _ => choice(seq("(", ")", optional("=")), "="),
     jumptable_body: $ => seq(
       "{",
       repeat($.jumpdest),
@@ -314,11 +378,11 @@ module.exports = grammar({
       "function",
       field("name", $.identifier),
       field("parameters", $.parameter_list),
-      $.visibility,
-      seq(
+      optional($.visibility),
+      optional(seq(
         "returns",
         field("parameters", $.parameter_list)
-      )
+      ))
     ),
     parameter_list: $ => seq(
       "(",
@@ -326,7 +390,7 @@ module.exports = grammar({
       ")"
     ),
     parameter: $ => seq(
-      $.type,
+      choice($.type, $.tuple_type),
       optional($.location),
       optional(field("name", $.identifier))
     ),
@@ -345,42 +409,52 @@ module.exports = grammar({
       "indexed",
       "memory",
       "storage",
-    )
-    ),
-    type: $ => prec.right(1, seq(
-      choice(
-        "address",
-        "bool",
-        "bytes",
-        "int",
-        "string",
-        "uint",
-        /uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
-        /int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)/,
-        /bytes(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32)/
-      ),
-      repeat(seq(
-        "[",
-        optional(field("array_size", $.number)),
-        "]"
-      ))
     )),
+    type: $ => seq(
+      choice(...types),
+      repeat($._array_suffix)
+    ),
+    tuple_type: $ => seq(
+      $.parameter_list,
+      repeat($._array_suffix)
+    ),
+    _array_suffix: $ => seq(
+      "[",
+      optional(field("array_size", $.number)),
+      "]"
+    ),
     opcode: _ => choice(
       field("opcode", choice(...opcodes)),
     ),
-    macro_call: $ => seq(
+    // `MACRO(a, b)`. Arguments may be literals, constants, `<args>`, labels,
+    // opcodes, builtins, nested invocations or compile-time expressions.
+    macro_call: $ => prec(PREC.call, seq(
       field("name", $.identifier),
-      seq(
-        "(",
-        optional(field("args", sep1(choice($.number, $.identifier), ","))),
-        ")"
-      )
+      $._call_arguments,
+    )),
+    // First-class macro invocation: `<fn>(<x>, 0x01)`.
+    macro_invocation: $ => prec(PREC.call, seq(
+      field("name", $.referenced_parameter),
+      $._call_arguments,
+    )),
+    _call_arguments: $ => seq(
+      "(",
+      optional(field("args", sep1($._macro_arg, ","))),
+      ")"
+    ),
+    _macro_arg: $ => choice(
+      $._expression,
+      $.identifier,
+      $.macro_call,
+      $.macro_invocation,
+      $.opcode,
+      $.string_literal,
     ),
     constant: $ => seq(
       "constant",
       field("name", $.identifier),
       "=",
-      field("value", choice($.number, $.builtin_function, $.string_literal))
+      field("value", choice($._expression, $.identifier, $.string_literal))
     ),
     referenced_parameter: $ => seq(
       "<",
@@ -402,148 +476,125 @@ module.exports = grammar({
       repeat($._macro_body_patterns),
       "}"
     ),
+    block: $ => seq(
+      "{",
+      repeat($._macro_body_patterns),
+      "}"
+    ),
     _macro_body_patterns: $ => choice(
+      $.boolean,
       $.builtin_function,
-      $.comment,
+      $.for_statement,
+      $.if_statement,
       $.jumpdest,
       $.jumpdest_label,
       $.macro_call,
-      $.natspec,
+      $.macro_invocation,
+      $.noop,
       $.number,
       $.opcode,
+      $.parenthesized_expression,
       $.referenced_constant,
       $.referenced_parameter,
+      $.storage_pointer,
+      $.string_literal,
+    ),
+    // Compile-time `if (cond) { } else if (cond) { } else { }`.
+    if_statement: $ => seq(
+      "if",
+      "(",
+      field("condition", $._expression),
+      ")",
+      field("consequence", $.block),
+      optional(seq(
+        "else",
+        field("alternative", choice($.if_statement, $.block))
+      ))
+    ),
+    // Compile-time `for (i in start..end step n) { }`.
+    for_statement: $ => seq(
+      "for",
+      "(",
+      field("variable", $.identifier),
+      "in",
+      field("start", $._expression),
+      "..",
+      field("end", $._expression),
+      optional(seq("step", field("step", $._expression))),
+      ")",
+      field("body", $.block)
+    ),
+    _expression: $ => choice(
+      $.binary_expression,
+      $.boolean,
+      $.builtin_function,
+      $.noop,
+      $.number,
+      $.parenthesized_expression,
+      $.referenced_constant,
+      $.referenced_parameter,
+      $.storage_pointer,
+      $.unary_expression,
+    ),
+    parenthesized_expression: $ => seq("(", $._expression, ")"),
+    unary_expression: $ => prec(PREC.unary, seq(
+      field("operator", choice("-", "!")),
+      field("operand", $._expression)
+    )),
+    binary_expression: $ => choice(
+      ...[
+        ["*", PREC.multiplicative],
+        ["/", PREC.multiplicative],
+        ["%", PREC.multiplicative],
+        ["+", PREC.additive],
+        ["-", PREC.additive],
+        ["==", PREC.comparison],
+        ["!=", PREC.comparison],
+        ["<", PREC.comparison],
+        [">", PREC.comparison],
+        ["<=", PREC.comparison],
+        [">=", PREC.comparison],
+      ].map(([operator, precedence]) => prec.left(precedence, seq(
+        field("left", $._expression),
+        field("operator", operator),
+        field("right", $._expression)
+      )))
     ),
     table: $ => seq(
       "table",
       field("name", $.identifier),
+      optional($._table_suffix),
       field("body", $.macro_body)
     ),
     test: $ => seq(
       "test",
       field("name", $.identifier),
-      optional(seq(
-        "(",
-        optional(field("parameters", sep1($.identifier, ","))),
-        ")"
-      )),
+      optional($._macro_parameters),
       "=",
       optional($._takes_returns),
       field("body", $.macro_body)
     ),
-    builtin_function: $ => choice(
-      $._bytes,
-      $._codesize,
-      $._copy_dyn_arg,
-      $._error_hash,
-      $._event_hash,
-      $._func_sig,
-      $._leftpad,
-      $._rightpad,
-      $._tablesize,
-      $._tablestart,
-      $._verbatim,
-      $._assert_pc,
-      $._embed_table,
-      $.storage_pointer,
-    ),
-    _bytes: $ => seq(
-      "__BYTES",
-      "(",
-      field("args", $.string_literal),
-      ")"
-    ),
-    _codesize: $ => seq(
-      "__codesize",
-      "(",
-      field("args", $.identifier),
-      ")"
-    ),
-    _copy_dyn_arg: $ => seq(
-      "__CODECOPY_DYN_ARG",
-      "(",
+    builtin_function: $ => prec(PREC.call, choice(
       seq(
-        field("args", $.number),
-        ",",
-        field("args", $.number),
+        field("name", choice(...table_builtins)),
+        "(",
+        field("table", $.identifier),
+        ")"
       ),
-      ")"
-    ),
-    _error_hash: $ => seq(
-      "__ERROR",
-      "(",
-      field("args", choice($.identifier, $.string_literal)),
-      ")"
-    ),
-    _event_hash: $ => seq(
-      "__EVENT_HASH",
-      "(",
-      field("args", choice($.identifier, $.string_literal)),
-      ")"
-    ),
-    _func_sig: $ => seq(
-      "__FUNC_SIG",
-      "(",
-      field("args", choice($.identifier, $.string_literal)),
-      ")"
-    ),
-    _leftpad: $ => seq(
-      "__LEFTPAD",
-      "(",
-      field("args",
-        choice(
-          $.number,
-          $.builtin_function,
-          $.referenced_constant,
-          $.referenced_parameter,
-        )
+      seq(
+        field("name", choice(...builtins)),
+        "(",
+        optional(field("args", sep1($._builtin_arg, ","))),
+        ")"
       ),
-      ")"
+    )),
+    _builtin_arg: $ => choice(
+      $._expression,
+      $.identifier,
+      $.string_literal,
     ),
-    _rightpad: $ => seq(
-      "__RIGHTPAD",
-      "(",
-      field("args",
-        choice(
-          $.number,
-          $.builtin_function,
-          $.referenced_constant,
-          $.referenced_parameter,
-        )
-      ),
-      ")"
-    ),
-    storage_pointer: _ => "FREE_STORAGE_POINTER()",
-    _tablestart: $ => seq(
-      "__tablestart",
-      "(",
-      field("table", $.identifier),
-      ")"
-    ),
-    _tablesize: $ => seq(
-      "__tablesize",
-      "(",
-      field("table", $.identifier),
-      ")"
-    ),
-    _verbatim: $ => seq(
-      "__VERBATIM",
-      "(",
-      field("args", $.number),
-      ")"
-    ),
-    _assert_pc: $ => seq(
-      "__ASSERT_PC",
-      "(",
-      field("args", $.number),
-      ")"
-    ),
-    _embed_table: $ => seq(
-      "__EMBED_TABLE",
-      "(",
-      field("args", $.identifier),
-      ")"
-    ),
+    noop: _ => "__NOOP",
+    storage_pointer: _ => seq("FREE_STORAGE_POINTER", "(", ")"),
   }
 });
 

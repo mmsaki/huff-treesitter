@@ -1,5 +1,6 @@
 [
   (macro_body)
+  (block)
 ] @indent.begin
 
 [

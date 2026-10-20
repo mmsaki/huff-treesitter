@@ -20,8 +20,7 @@ Constants
   (declaration
     (constant
       name: (identifier)
-      value: (builtin_function
-        (storage_pointer)))))
+      value: (storage_pointer))))
 
 ================
 Constant Reference
@@ -37,17 +36,16 @@ Constant Reference
 ---
 
 (source_file
- (declaration
-  (constant
-   (identifier)
-   (builtin_function
-    (storage_pointer))))
- (declaration
-  (macro
-   (identifier)
-   (number)
-   (number)
-   (macro_body
-    (referenced_constant
-     (identifier))
-    (opcode)))))
+  (declaration
+    (constant
+      (identifier)
+      (storage_pointer)))
+  (declaration
+    (macro
+      (identifier)
+      (number)
+      (number)
+      (macro_body
+        (referenced_constant
+          (identifier))
+        (opcode)))))
